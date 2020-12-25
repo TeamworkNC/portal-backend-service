@@ -29,8 +29,6 @@ public class Movies {
         this.description = description;
     }
 
-
-
     public String getName() {
         return name;
     }
