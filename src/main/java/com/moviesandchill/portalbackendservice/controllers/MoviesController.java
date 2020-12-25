@@ -37,7 +37,7 @@ public class MoviesController {
 
     @RequestMapping({"/movies/list", "/movies"})
     public String listProducts(Model model){
-        model.addAttribute("products", moviesService.listAll());
+        model.addAttribute("movies", moviesService.listAll());
         return "movies/list";
     }
 
