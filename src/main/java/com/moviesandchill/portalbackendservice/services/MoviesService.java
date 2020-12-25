@@ -14,5 +14,5 @@ public interface MoviesService {
 
     void delete(Long id);
 
-    Movies saveOrUpdateProductForm(MoviesForm productForm);
+    Movies saveOrUpdateMoviesForm(MoviesForm moviesForm);
 }

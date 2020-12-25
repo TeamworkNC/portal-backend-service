@@ -21,12 +21,12 @@ public class MoviesController {
     private MoviesToMoviesForm moviesToMoviesForm;
 
     @Autowired
-    public void setProductToProductForm(MoviesToMoviesForm moviesToMoviesForm) {
+    public void setMoviesToMoviesForm(MoviesToMoviesForm moviesToMoviesForm) {
         this.moviesToMoviesForm = moviesToMoviesForm;
     }
 
     @Autowired
-    public void setProductService(MoviesService moviesService) {
+    public void setMoviesService(MoviesService moviesService) {
         this.moviesService = moviesService;
     }
 
@@ -36,13 +36,13 @@ public class MoviesController {
     }
 
     @RequestMapping({"/movies/list", "/movies"})
-    public String listProducts(Model model){
+    public String listMovies(Model model){
         model.addAttribute("movies", moviesService.listAll());
         return "movies/list";
     }
 
     @RequestMapping("/movies/show/{id}")
-    public String getProduct(@PathVariable String id, Model model){
+    public String getMovies(@PathVariable String id, Model model){
         model.addAttribute("movies", moviesService.getById(Long.valueOf(id)));
         return "movies/show";
     }
@@ -52,24 +52,24 @@ public class MoviesController {
         Movies movies = moviesService.getById(Long.valueOf(id));
         MoviesForm moviesForm = moviesToMoviesForm.convert(movies);
 
-        model.addAttribute("productForm", moviesForm);
+        model.addAttribute("moviesForm", moviesForm);
         return "movies/moviesform";
     }
 
-    @RequestMapping("/product/new")
-    public String newProduct(Model model){
-        model.addAttribute("productForm", new MoviesForm());
+    @RequestMapping("/movies/new")
+    public String newMovies(Model model){
+        model.addAttribute("moviesForm", new MoviesForm());
         return "movies/moviesform";
     }
 
-    @RequestMapping(value = "/product", method = RequestMethod.POST)
-    public String saveOrUpdateProduct(@Valid MoviesForm moviesForm, BindingResult bindingResult){
+    @RequestMapping(value = "/movies", method = RequestMethod.POST)
+    public String saveOrUpdateMovies(@Valid MoviesForm moviesForm, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
             return "movies/moviesform";
         }
 
-        Movies savedMovie = moviesService.saveOrUpdateProductForm(moviesForm);
+        Movies savedMovie = moviesService.saveOrUpdateMoviesForm(moviesForm);
 
         return "redirect:/movies/show/" + savedMovie.getId();
     }

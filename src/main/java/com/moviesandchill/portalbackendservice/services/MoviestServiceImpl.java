@@ -47,10 +47,10 @@ public class MoviestServiceImpl implements MoviesService {
     }
 
     @Override
-    public Movies saveOrUpdateProductForm(MoviesForm moviesForm) {
+    public Movies saveOrUpdateMoviesForm(MoviesForm moviesForm) {
         Movies savedMovies = saveOrUpdate(moviesFormToMovies.convert(moviesForm));
 
-        System.out.println("Saved Product Id: " + savedMovies.getId());
+        System.out.println("Saved movie Id: " + savedMovies.getId());
         return savedMovies;
     }
 }
