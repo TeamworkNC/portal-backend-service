@@ -1,10 +1,9 @@
 package com.moviesandchill.portalbackendservice.controllers;
 
 import com.moviesandchill.portalbackendservice.dto.UserDto;
+import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.services.UsersService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +23,10 @@ public class UsersController {
     @GetMapping
     public List<UserDto> getAllUsers() {
         return usersService.getAllUsers();
+    }
+
+    @PostMapping("/login")
+    public UserDto login(@RequestBody LoginRequestDto loginRequestDto) {
+        return usersService.login(loginRequestDto).orElseThrow();
     }
 }
