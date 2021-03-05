@@ -35,6 +35,13 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public Optional<UserDto> getUserById(long userId) {
+        String url = USER_SERVICE_URL + "/api/v1/users/" + userId;
+        UserDto dto = restTemplate.getForObject(url, UserDto.class);
+        return Optional.ofNullable(dto);
+    }
+
+    @Override
     public Optional<UserDto> login(LoginRequestDto loginRequestDto) {
         String url = USER_SERVICE_URL + "/api/v1/users/login";
 
