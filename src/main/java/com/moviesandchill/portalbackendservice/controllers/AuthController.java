@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController()
@@ -28,10 +27,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public void login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
-        authService.login(loginRequestDto).ifPresent(token -> {
-            Cookie cookie = new Cookie("session_token", token);
-            cookie.setMaxAge(9999999);
-            res.addCookie(cookie);
-        });
+        authService.login(loginRequestDto);
     }
 }
