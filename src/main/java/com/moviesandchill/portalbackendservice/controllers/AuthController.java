@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.controllers;
 
+import com.moviesandchill.portalbackendservice.dto.UserDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.services.AuthService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
-        authService.login(loginRequestDto);
+    public UserDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
+        return authService.login(loginRequestDto).orElseThrow();
     }
 }
