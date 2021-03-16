@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.config;
 
-import com.moviesandchill.portalbackendservice.security.CookieAuthConfigurer;
 import com.moviesandchill.portalbackendservice.services.AuthService;
 import com.moviesandchill.portalbackendservice.services.UsersService;
 import org.springframework.context.annotation.Configuration;
@@ -33,8 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .mvcMatchers("/api/v1/public/**").permitAll()
-                .mvcMatchers("/api/v1/**").hasRole("USER")
-                .and()
-                .apply(new CookieAuthConfigurer(authService, usersService));
+                .mvcMatchers("/api/v1/**").hasRole("USER");
     }
 }

@@ -5,16 +5,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class UserDto implements Serializable {
     private Long userId;
 
-    private String name;
+    private String login;
+
+    private String firstName;
+
+    private String lastName;
 
     private LocalDate birthday;
 

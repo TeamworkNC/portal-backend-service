@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.dto.login;
+package com.moviesandchill.portalbackendservice.dto.globalrole;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginRequestDto {
-    private String login;
-
-    private String password;
+public class GlobalRoleDto {
+    private Long globalRoleId;
+    private String name;
 }

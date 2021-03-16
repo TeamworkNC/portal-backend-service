@@ -1,24 +1,30 @@
 package com.moviesandchill.portalbackendservice.services;
 
 import com.moviesandchill.portalbackendservice.dto.UserDto;
+import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
-import com.moviesandchill.portalbackendservice.exceptions.user.UserNotFoundException;
 import com.moviesandchill.portalbackendservice.security.SimpleAuthentication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final UsersService usersService;
+    private final UserGlobalRoleService userGlobalRoleService;
 
-    public AuthServiceImpl(UsersService usersService) {
+    public AuthServiceImpl(UsersService usersService, UserGlobalRoleService userGlobalRoleService) {
         this.usersService = usersService;
+        this.userGlobalRoleService = userGlobalRoleService;
     }
 
     @Override
@@ -34,25 +40,36 @@ public class AuthServiceImpl implements AuthService {
         long userId = user.getUserId();
         log.info("user id: " + userId);
 
-        Authentication authentication = new SimpleAuthentication(user);
+        List<GlobalRoleDto> globalRoles = userGlobalRoleService.getAllGlobalRoles(userId);
+        List<GrantedAuthority> authorities = toGrantedAuthorities(globalRoles);
+        log.info("authorities: " + authorities);
+        Authentication authentication = new SimpleAuthentication(userId, authorities);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return Optional.of(user);
     }
 
-    @Override
-    public UserDto login(long userId) throws UserNotFoundException {
-        UserDto userDto = usersService.getUserById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
-
-        Authentication authentication = new SimpleAuthentication(userDto);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return userDto;
+    private List<GrantedAuthority> toGrantedAuthorities(List<GlobalRoleDto> globalRoleDtos) {
+        return globalRoleDtos.stream()
+                .map(globalRoleDto -> new SimpleGrantedAuthority("ROLE_" + globalRoleDto.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<UserDto> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDto user = (UserDto) authentication.getPrincipal(); //может быть null
-        return Optional.ofNullable(user);
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null) {
+            return Optional.empty();
+        }
+
+        long userId = (long) auth.getPrincipal();
+        var userOptional = usersService.getUserById(userId);
+
+        if (userOptional.isEmpty()) {
+            // если мы решили удалить пользователя, то надо кроме этого удалить сессию.
+            throw new IllegalStateException();
+        }
+        return usersService.getUserById(userId);
     }
 }
