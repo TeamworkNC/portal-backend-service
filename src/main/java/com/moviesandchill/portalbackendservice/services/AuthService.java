@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface AuthService {
     Optional<UserDto> login(LoginRequestDto loginRequestDto);
+
+    Optional<UserDto> getCurrentUser();
 }

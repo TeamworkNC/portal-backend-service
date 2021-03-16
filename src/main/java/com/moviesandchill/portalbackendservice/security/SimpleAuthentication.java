@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.security;
 
-import com.moviesandchill.portalbackendservice.dto.UserDto;
 import lombok.Data;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,16 +12,16 @@ import java.util.List;
 @Data
 public class SimpleAuthentication implements Authentication {
 
-    private final UserDto user;
+    private long userId;
     private List<GrantedAuthority> authorities = new ArrayList<>();
 
-    public SimpleAuthentication(UserDto user) {
-        this.user = user;
+    public SimpleAuthentication(long userId) {
+        this.userId = userId;
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    public SimpleAuthentication(UserDto user, List<GrantedAuthority> authorities) {
-        this.user = user;
+    public SimpleAuthentication(long userId, List<GrantedAuthority> authorities) {
+        this.userId = userId;
         this.authorities = authorities;
     }
 
@@ -43,7 +42,7 @@ public class SimpleAuthentication implements Authentication {
 
     @Override
     public Object getPrincipal() {
-        return user;
+        return userId;
     }
 
     @Override
@@ -58,7 +57,7 @@ public class SimpleAuthentication implements Authentication {
 
     @Override
     public String getName() {
-        return user.getLogin();
+        return Long.toString(userId);
     }
 
 

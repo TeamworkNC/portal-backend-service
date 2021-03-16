@@ -33,8 +33,26 @@ public class AuthServiceImpl implements AuthService {
         long userId = user.getUserId();
         log.info("user id: " + userId);
 
-        Authentication authentication = new SimpleAuthentication(user);
+        Authentication authentication = new SimpleAuthentication(userId);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return Optional.of(user);
+    }
+
+    @Override
+    public Optional<UserDto> getCurrentUser() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null) {
+            return Optional.empty();
+        }
+
+        long userId = (long) auth.getPrincipal();
+        var userOptional = usersService.getUserById(userId);
+
+        if (userOptional.isEmpty()) {
+            // если мы решили удалить пользователя, то надо кроме этого удалить сессию.
+            throw new IllegalStateException();
+        }
+        return usersService.getUserById(userId);
     }
 }
