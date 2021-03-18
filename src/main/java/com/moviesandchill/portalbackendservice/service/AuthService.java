@@ -1,7 +1,7 @@
-package com.moviesandchill.portalbackendservice.services;
+package com.moviesandchill.portalbackendservice.service;
 
-import com.moviesandchill.portalbackendservice.dto.UserDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.dto.user.UserDto;
 
 import java.util.Optional;
 

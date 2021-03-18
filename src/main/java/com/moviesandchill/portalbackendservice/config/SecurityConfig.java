@@ -1,7 +1,5 @@
 package com.moviesandchill.portalbackendservice.config;
 
-import com.moviesandchill.portalbackendservice.services.AuthService;
-import com.moviesandchill.portalbackendservice.services.UsersService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,14 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
         securedEnabled = true,
         jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final AuthService authService;
-    private final UsersService usersService;
-
-    public SecurityConfig(AuthService authService, UsersService usersService) {
-        this.authService = authService;
-        this.usersService = usersService;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

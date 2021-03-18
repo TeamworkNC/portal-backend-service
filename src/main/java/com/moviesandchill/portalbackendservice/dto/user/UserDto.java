@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.dto;
+package com.moviesandchill.portalbackendservice.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

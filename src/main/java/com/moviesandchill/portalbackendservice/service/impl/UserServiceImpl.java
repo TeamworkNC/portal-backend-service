@@ -1,7 +1,9 @@
-package com.moviesandchill.portalbackendservice.services;
+package com.moviesandchill.portalbackendservice.service.impl;
 
-import com.moviesandchill.portalbackendservice.dto.UserDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,17 +17,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsersServiceImpl implements UsersService {
+public class UserServiceImpl implements UserService {
 
-    @Value("${endpoint.user-service.url}")
-    private String USER_SERVICE_URL;
+    private String userServiceUrl;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
 
     @Override
     public List<UserDto> getAllUsers() {
-        String url = USER_SERVICE_URL + "/api/v1/users";
+        String url = userServiceUrl + "/api/v1/users";
         UserDto[] dtos = restTemplate.getForObject(url, UserDto[].class);
 
         if (dtos == null) {
@@ -36,14 +37,14 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public Optional<UserDto> getUserById(long userId) {
-        String url = USER_SERVICE_URL + "/api/v1/users/" + userId;
+        String url = userServiceUrl + "/api/v1/users/" + userId;
         UserDto dto = restTemplate.getForObject(url, UserDto.class);
         return Optional.ofNullable(dto);
     }
 
     @Override
     public Optional<UserDto> login(LoginRequestDto loginRequestDto) {
-        String url = USER_SERVICE_URL + "/api/v1/users/login";
+        String url = userServiceUrl + "/api/v1/users/login";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -51,5 +52,10 @@ public class UsersServiceImpl implements UsersService {
         HttpEntity<LoginRequestDto> entity = new HttpEntity<>(loginRequestDto, headers);
         UserDto dto = restTemplate.postForObject(url, entity, UserDto.class);
         return Optional.ofNullable(dto);
+    }
+
+    @Autowired
+    public void setUserServiceUrl(@Value("${endpoint.user-service.url}") String userServiceUrl) {
+        this.userServiceUrl = userServiceUrl;
     }
 }

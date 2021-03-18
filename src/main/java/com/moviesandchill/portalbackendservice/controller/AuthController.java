@@ -1,8 +1,8 @@
-package com.moviesandchill.portalbackendservice.controllers;
+package com.moviesandchill.portalbackendservice.controller;
 
-import com.moviesandchill.portalbackendservice.dto.UserDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
-import com.moviesandchill.portalbackendservice.services.AuthService;
+import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
