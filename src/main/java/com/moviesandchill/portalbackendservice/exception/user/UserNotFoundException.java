@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.exceptions.user;
+package com.moviesandchill.portalbackendservice.exception.user;
 
 public class UserNotFoundException extends Exception {
     public UserNotFoundException(long userId) {

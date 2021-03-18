@@ -1,12 +1,12 @@
-package com.moviesandchill.portalbackendservice.services;
+package com.moviesandchill.portalbackendservice.service;
 
-import com.moviesandchill.portalbackendservice.dto.UserDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.dto.user.UserDto;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UsersService {
+public interface UserService {
     List<UserDto> getAllUsers();
 
     Optional<UserDto> getUserById(long userId);

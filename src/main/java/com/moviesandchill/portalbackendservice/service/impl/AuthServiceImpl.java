@@ -1,9 +1,12 @@
-package com.moviesandchill.portalbackendservice.services;
+package com.moviesandchill.portalbackendservice.service.impl;
 
-import com.moviesandchill.portalbackendservice.dto.UserDto;
 import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.dto.user.UserDto;
 import com.moviesandchill.portalbackendservice.security.SimpleAuthentication;
+import com.moviesandchill.portalbackendservice.service.AuthService;
+import com.moviesandchill.portalbackendservice.service.UserGlobalRoleService;
+import com.moviesandchill.portalbackendservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,17 +22,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AuthServiceImpl implements AuthService {
 
-    private final UsersService usersService;
+    private final UserService userService;
     private final UserGlobalRoleService userGlobalRoleService;
 
-    public AuthServiceImpl(UsersService usersService, UserGlobalRoleService userGlobalRoleService) {
-        this.usersService = usersService;
+    public AuthServiceImpl(UserService userService, UserGlobalRoleService userGlobalRoleService) {
+        this.userService = userService;
         this.userGlobalRoleService = userGlobalRoleService;
     }
 
     @Override
     public Optional<UserDto> login(LoginRequestDto loginRequestDto) {
-        var userOptional = usersService.login(loginRequestDto);
+        var userOptional = userService.login(loginRequestDto);
 
         if (userOptional.isEmpty()) {
             log.info("user not found");
@@ -64,12 +67,12 @@ public class AuthServiceImpl implements AuthService {
         }
 
         long userId = (long) auth.getPrincipal();
-        var userOptional = usersService.getUserById(userId);
+        var userOptional = userService.getUserById(userId);
 
         if (userOptional.isEmpty()) {
             // если мы решили удалить пользователя, то надо кроме этого удалить сессию.
             throw new IllegalStateException();
         }
-        return usersService.getUserById(userId);
+        return userService.getUserById(userId);
     }
 }
