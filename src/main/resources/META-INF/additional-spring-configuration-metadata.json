@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "endpoint.user-service.url",
+      "type": "java.lang.String",
+      "description": "user service url."
+    }
+  ]
+}
