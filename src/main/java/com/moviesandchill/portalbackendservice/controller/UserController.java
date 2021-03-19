@@ -1,10 +1,13 @@
 package com.moviesandchill.portalbackendservice.controller;
 
+import com.moviesandchill.portalbackendservice.dto.password.UpdatePasswordDto;
+import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
+import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.exception.user.UserNotFoundException;
 import com.moviesandchill.portalbackendservice.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +25,36 @@ public class UserController {
     }
 
     @GetMapping
+    @Secured("ROLE_ADMIN")
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @PostMapping
+    @Secured("ROLE_ADMIN")
+    public UserDto addUser(@RequestBody NewUserDto newUserDto) {
+        return userService.addUser(newUserDto);
+    }
+
+    @DeleteMapping
+    @Secured("ROLE_ADMIN")
+    public void deleteAllUsers() {
+        userService.deleteAllUsers();
+    }
+
+    @GetMapping("/{userId}")
+    public FullUserDto getUser(@PathVariable long userId) throws UserNotFoundException {
+        return userService.getFullUser(userId);
+    }
+
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable long userId) {
+        userService.deleteUser(userId);
+    }
+
+
+    @PutMapping("/{userId}/password")
+    public boolean updateUserPassword(@PathVariable long userId, @RequestBody UpdatePasswordDto updatePasswordDto) throws UserNotFoundException {
+        return userService.updateUserPassword(userId, updatePasswordDto);
     }
 }

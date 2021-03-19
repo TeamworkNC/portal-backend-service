@@ -3,6 +3,7 @@ package com.moviesandchill.portalbackendservice.service.impl;
 import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.exception.user.UserNotFoundException;
 import com.moviesandchill.portalbackendservice.security.SimpleAuthentication;
 import com.moviesandchill.portalbackendservice.service.AuthService;
 import com.moviesandchill.portalbackendservice.service.UserGlobalRoleService;
@@ -67,12 +68,11 @@ public class AuthServiceImpl implements AuthService {
         }
 
         long userId = (long) auth.getPrincipal();
-        var userOptional = userService.getUserById(userId);
 
-        if (userOptional.isEmpty()) {
-            // если мы решили удалить пользователя, то надо кроме этого удалить сессию.
-            throw new IllegalStateException();
+        try {
+            return Optional.of(userService.getUser(userId));
+        } catch (UserNotFoundException e) {
+            throw new IllegalStateException(e);
         }
-        return userService.getUserById(userId);
     }
 }
