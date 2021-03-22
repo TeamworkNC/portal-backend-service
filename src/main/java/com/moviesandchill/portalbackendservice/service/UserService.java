@@ -29,4 +29,6 @@ public interface UserService {
     boolean updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto) throws UserNotFoundException;
 
     Optional<UserDto> login(LoginRequestDto loginRequestDto);
+
+    Optional<UserDto> register(NewUserDto newUserDto);
 }

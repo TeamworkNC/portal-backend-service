@@ -25,7 +25,6 @@ public class UserController {
     }
 
     @GetMapping
-    @Secured("ROLE_ADMIN")
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }

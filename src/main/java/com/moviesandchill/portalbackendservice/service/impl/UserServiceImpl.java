@@ -17,9 +17,6 @@ import com.moviesandchill.portalbackendservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -113,13 +110,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserDto> login(LoginRequestDto loginRequestDto) {
         String url = userServiceUrl + "/api/v1/users/login";
+        UserDto user = restTemplate.postForObject(url, loginRequestDto, UserDto.class);
+        return Optional.ofNullable(user);
+    }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<LoginRequestDto> entity = new HttpEntity<>(loginRequestDto, headers);
-        UserDto dto = restTemplate.postForObject(url, entity, UserDto.class);
-        return Optional.ofNullable(dto);
+    @Override
+    public Optional<UserDto> register(NewUserDto newUserDto) {
+        String url = userServiceUrl + "/api/v1/users/register";
+        UserDto userDto = restTemplate.postForObject(url, newUserDto, UserDto.class);
+        return Optional.ofNullable(userDto);
     }
 
     @Autowired
