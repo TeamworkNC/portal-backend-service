@@ -4,7 +4,6 @@ import com.moviesandchill.portalbackendservice.dto.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
-import com.moviesandchill.portalbackendservice.exception.user.UserNotFoundException;
 import com.moviesandchill.portalbackendservice.service.UserService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public FullUserDto getUser(@PathVariable long userId) throws UserNotFoundException {
+    public FullUserDto getUser(@PathVariable long userId) {
         return userService.getFullUser(userId);
     }
 
@@ -53,7 +52,7 @@ public class UserController {
 
 
     @PutMapping("/{userId}/password")
-    public boolean updateUserPassword(@PathVariable long userId, @RequestBody UpdatePasswordDto updatePasswordDto) throws UserNotFoundException {
+    public boolean updateUserPassword(@PathVariable long userId, @RequestBody UpdatePasswordDto updatePasswordDto) {
         return userService.updateUserPassword(userId, updatePasswordDto);
     }
 }

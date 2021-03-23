@@ -1,8 +1,7 @@
 package com.moviesandchill.portalbackendservice.service.impl;
 
 import com.moviesandchill.portalbackendservice.dto.achievement.AchievementDto;
-import com.moviesandchill.portalbackendservice.exception.achievement.AchievementNotFoundException;
-import com.moviesandchill.portalbackendservice.exception.user.UserNotFoundException;
+import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.UserAchievementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -20,31 +17,32 @@ public class UserAchievementServiceImpl implements UserAchievementService {
 
     private String userServiceUrl;
     private final RestTemplate restTemplate = new RestTemplate();
+    private final CommonMapper commonMapper;
+
+    public UserAchievementServiceImpl(CommonMapper commonMapper) {
+        this.commonMapper = commonMapper;
+    }
 
     @Override
-    public List<AchievementDto> getAllAchievements(long userId) throws UserNotFoundException {
+    public List<AchievementDto> getAllAchievements(long userId) {
         String url = userServiceUrl + "/api/v1/users/" + userId + "/achievements";
         AchievementDto[] dtos = restTemplate.getForObject(url, AchievementDto[].class);
-
-        if (dtos == null) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(Arrays.asList(dtos));
+        return commonMapper.toList(dtos);
     }
 
     @Override
-    public void addAchievement(long userId, long achievementId) throws UserNotFoundException, AchievementNotFoundException {
-
+    public boolean addAchievement(long userId, long achievementId) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void deleteAllAchievements(long userId) throws UserNotFoundException {
-
+    public boolean deleteAllAchievements(long userId) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void deleteAchievement(long userId, long achievementId) throws AchievementNotFoundException, UserNotFoundException {
-
+    public boolean deleteAchievement(long userId, long achievementId) {
+        throw new UnsupportedOperationException();
     }
 
     @Autowired

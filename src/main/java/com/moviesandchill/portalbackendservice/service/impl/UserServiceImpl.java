@@ -8,7 +8,7 @@ import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
-import com.moviesandchill.portalbackendservice.exception.user.UserNotFoundException;
+import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.mapper.UserMapper;
 import com.moviesandchill.portalbackendservice.service.UserAchievementService;
 import com.moviesandchill.portalbackendservice.service.UserFriendService;
@@ -17,11 +17,11 @@ import com.moviesandchill.portalbackendservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,21 +37,19 @@ public class UserServiceImpl implements UserService {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final UserMapper userMapper;
+    private final CommonMapper commonMapper;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper, CommonMapper commonMapper) {
         this.userMapper = userMapper;
+        this.commonMapper = commonMapper;
     }
 
     @Override
     public List<UserDto> getAllUsers() {
         String url = userServiceUrl + "/api/v1/users";
         UserDto[] dtos = restTemplate.getForObject(url, UserDto[].class);
-
-        if (dtos == null) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(Arrays.asList(dtos));
+        return commonMapper.toList(dtos);
     }
 
     @Override
@@ -73,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public FullUserDto getFullUser(long userId) throws UserNotFoundException {
+    public FullUserDto getFullUser(long userId) {
         UserDto user = getUser(userId);
         FullUserDto fullUser = userMapper.mapToFullDto(user);
 
@@ -89,7 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(long userId, UpdateUserDto updateUserDto) throws UserNotFoundException {
+    public void updateUser(long userId, UpdateUserDto updateUserDto) {
         String url = userServiceUrl + "/api/v1/users/" + userId;
         restTemplate.put(url, updateUserDto);
     }
@@ -101,10 +99,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto) throws UserNotFoundException {
+    public boolean updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto) {
         String url = userServiceUrl + "/api/v1/users/" + userId + "/password";
-        restTemplate.put(url, updatePasswordDto);
-        return true; // FIXME
+        RequestEntity<UpdatePasswordDto> requestEntity = RequestEntity.put(url)
+                .body(updatePasswordDto);
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(requestEntity, Boolean.class);
+        return responseEntity.getBody() != null && responseEntity.getBody();
     }
 
     @Override
