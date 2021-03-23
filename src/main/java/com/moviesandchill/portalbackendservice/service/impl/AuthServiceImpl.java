@@ -2,8 +2,8 @@ package com.moviesandchill.portalbackendservice.service.impl;
 
 import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
-import com.moviesandchill.portalbackendservice.exception.user.UserNotFoundException;
 import com.moviesandchill.portalbackendservice.security.SimpleAuthentication;
 import com.moviesandchill.portalbackendservice.service.AuthService;
 import com.moviesandchill.portalbackendservice.service.UserGlobalRoleService;
@@ -33,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Optional<UserDto> login(LoginRequestDto loginRequestDto) {
+        log.info("try login user");
         var userOptional = userService.login(loginRequestDto);
 
         if (userOptional.isEmpty()) {
@@ -53,6 +54,26 @@ public class AuthServiceImpl implements AuthService {
         return Optional.of(user);
     }
 
+    @Override
+    public Optional<UserDto> register(NewUserDto newUserDto) {
+        log.info("try register user");
+        Optional<UserDto> userOptional = userService.register(newUserDto);
+
+        if (userOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        UserDto user = userOptional.get();
+
+        List<GlobalRoleDto> globalRoles = userGlobalRoleService.getAllGlobalRoles(user.getUserId());
+        List<GrantedAuthority> authorities = toGrantedAuthorities(globalRoles);
+        log.info("authorities: " + authorities);
+
+        Authentication authentication = new SimpleAuthentication(user.getUserId(), authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return Optional.of(user);
+    }
+
+
     private List<GrantedAuthority> toGrantedAuthorities(List<GlobalRoleDto> globalRoleDtos) {
         return globalRoleDtos.stream()
                 .map(globalRoleDto -> new SimpleGrantedAuthority("ROLE_" + globalRoleDto.getName()))
@@ -69,10 +90,6 @@ public class AuthServiceImpl implements AuthService {
 
         long userId = (long) auth.getPrincipal();
 
-        try {
-            return Optional.of(userService.getUser(userId));
-        } catch (UserNotFoundException e) {
-            throw new IllegalStateException(e);
-        }
+        return Optional.of(userService.getUser(userId));
     }
 }

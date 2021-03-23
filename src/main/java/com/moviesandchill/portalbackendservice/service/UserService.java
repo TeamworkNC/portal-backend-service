@@ -6,7 +6,6 @@ import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
-import com.moviesandchill.portalbackendservice.exception.user.UserNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,15 +17,17 @@ public interface UserService {
 
     void deleteAllUsers();
 
-    UserDto getUser(long userId) throws UserNotFoundException;
+    UserDto getUser(long userId);
 
-    FullUserDto getFullUser(long userId) throws UserNotFoundException;
+    FullUserDto getFullUser(long userId);
 
-    void updateUser(long userId, UpdateUserDto updateUserDto) throws UserNotFoundException;
+    void updateUser(long userId, UpdateUserDto updateUserDto);
 
     void deleteUser(long userId);
 
-    boolean updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto) throws UserNotFoundException;
+    boolean updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto);
 
     Optional<UserDto> login(LoginRequestDto loginRequestDto);
+
+    Optional<UserDto> register(NewUserDto newUserDto);
 }

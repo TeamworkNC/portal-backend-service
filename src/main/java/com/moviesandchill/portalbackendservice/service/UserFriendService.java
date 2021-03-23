@@ -2,16 +2,15 @@ package com.moviesandchill.portalbackendservice.service;
 
 
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
-import com.moviesandchill.portalbackendservice.exception.user.UserNotFoundException;
 
 import java.util.List;
 
 public interface UserFriendService {
-    List<UserDto> getAllFriends(long userId) throws UserNotFoundException;
+    List<UserDto> getAllFriends(long userId);
 
-    void addFriend(long userId, long friendId) throws UserNotFoundException;
+    boolean addFriend(long userId, long friendId);
 
-    void deleteAllFriends(long userId) throws UserNotFoundException;
+    boolean deleteAllFriends(long userId);
 
-    void deleteFriend(long userId, long friendId) throws UserNotFoundException;
+    boolean deleteFriend(long userId, long friendId);
 }
