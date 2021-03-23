@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface AuthService {
     Optional<UserDto> login(LoginRequestDto loginRequestDto);
 
-    Optional<UserDto> register(NewUserDto newUserDto);
+    Optional<Long> register(NewUserDto newUserDto);
 
     Optional<UserDto> getCurrentUser();
 }

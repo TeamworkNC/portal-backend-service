@@ -35,7 +35,7 @@ public class PublicAuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody NewUserDto newUserDto) {
+    public ResponseEntity<Long> register(@RequestBody NewUserDto newUserDto) {
         var userOptional = authService.register(newUserDto);
         return commonMapper.toResponseEntity(userOptional);
     }
