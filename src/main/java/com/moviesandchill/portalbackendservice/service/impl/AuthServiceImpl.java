@@ -55,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Optional<UserDto> register(NewUserDto newUserDto) {
+    public Optional<Long> register(NewUserDto newUserDto) {
         log.info("try register user");
         Optional<UserDto> userOptional = userService.register(newUserDto);
 
@@ -70,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
 
         Authentication authentication = new SimpleAuthentication(user.getUserId(), authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return Optional.of(user);
+        return Optional.of(user.getUserId());
     }
 
 
