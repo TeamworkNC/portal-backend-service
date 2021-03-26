@@ -13,17 +13,17 @@ import java.util.Optional;
 public interface UserService {
     List<UserDto> getAllUsers();
 
-    UserDto addUser(NewUserDto user);
+    Optional<UserDto> addUser(NewUserDto user);
 
-    void deleteAllUsers();
+    boolean deleteAllUsers();
 
-    UserDto getUser(long userId);
+    Optional<UserDto> getUser(long userId);
 
-    FullUserDto getFullUser(long userId);
+    Optional<FullUserDto> getFullUser(long userId);
 
-    void updateUser(long userId, UpdateUserDto updateUserDto);
+    boolean updateUser(long userId, UpdateUserDto updateUserDto);
 
-    void deleteUser(long userId);
+    boolean deleteUser(long userId);
 
     boolean updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto);
 

@@ -14,13 +14,11 @@ import com.moviesandchill.portalbackendservice.service.UserAchievementService;
 import com.moviesandchill.portalbackendservice.service.UserFriendService;
 import com.moviesandchill.portalbackendservice.service.UserGlobalRoleService;
 import com.moviesandchill.portalbackendservice.service.UserService;
+import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +33,6 @@ public class UserServiceImpl implements UserService {
     private UserAchievementService userAchievementService;
     private UserGlobalRoleService userGlobalRoleService;
 
-    private final RestTemplate restTemplate = new RestTemplate();
     private final UserMapper userMapper;
     private final CommonMapper commonMapper;
 
@@ -48,32 +45,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUsers() {
         String url = userServiceUrl + "/api/v1/users";
-        UserDto[] dtos = restTemplate.getForObject(url, UserDto[].class);
-        return commonMapper.toList(dtos);
+        Optional<UserDto[]> userDtosOptional = RestTemplateUtils.get(url, UserDto[].class);
+        return commonMapper.toList(userDtosOptional);
     }
 
     @Override
-    public UserDto addUser(NewUserDto newUserDto) {
+    public Optional<UserDto> addUser(NewUserDto newUserDto) {
         String url = userServiceUrl + "/api/v1/users";
-        return restTemplate.postForObject(url, newUserDto, UserDto.class);
+        return RestTemplateUtils.post(url, newUserDto, UserDto.class);
     }
 
     @Override
-    public void deleteAllUsers() {
+    public boolean deleteAllUsers() {
         String url = userServiceUrl + "/api/v1/users";
-        restTemplate.delete(url);
+        return RestTemplateUtils.delete(url);
     }
 
     @Override
-    public UserDto getUser(long userId) {
+    public Optional<UserDto> getUser(long userId) {
         String url = userServiceUrl + "/api/v1/users/" + userId;
-        return restTemplate.getForObject(url, UserDto.class);
+        return RestTemplateUtils.get(url, null, UserDto.class);
     }
 
     @Override
-    public FullUserDto getFullUser(long userId) {
-        UserDto user = getUser(userId);
-        FullUserDto fullUser = userMapper.mapToFullDto(user);
+    public Optional<FullUserDto> getFullUser(long userId) {
+        var userDtoOptional = getUser(userId);
+        if (userDtoOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        var userDto = userDtoOptional.get();
+
+        FullUserDto fullUser = userMapper.mapToFullDto(userDto);
 
         List<UserDto> friends = userFriendService.getAllFriends(userId);
         fullUser.setFriends(friends);
@@ -83,42 +85,37 @@ public class UserServiceImpl implements UserService {
 
         List<GlobalRoleDto> globalRoles = userGlobalRoleService.getAllGlobalRoles(userId);
         fullUser.setGlobalRoles(globalRoles);
-        return fullUser;
+        return Optional.of(fullUser);
     }
 
     @Override
-    public void updateUser(long userId, UpdateUserDto updateUserDto) {
+    public boolean updateUser(long userId, UpdateUserDto updateUserDto) {
         String url = userServiceUrl + "/api/v1/users/" + userId;
-        restTemplate.put(url, updateUserDto);
+        return RestTemplateUtils.put(url, updateUserDto);
     }
 
     @Override
-    public void deleteUser(long userId) {
+    public boolean deleteUser(long userId) {
         String url = userServiceUrl + "/api/v1/users/" + userId;
-        restTemplate.delete(url);
+        return RestTemplateUtils.delete(url);
     }
 
     @Override
     public boolean updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto) {
         String url = userServiceUrl + "/api/v1/users/" + userId + "/password";
-        RequestEntity<UpdatePasswordDto> requestEntity = RequestEntity.put(url)
-                .body(updatePasswordDto);
-        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(requestEntity, Boolean.class);
-        return responseEntity.getBody() != null && responseEntity.getBody();
+        return RestTemplateUtils.put(url, updatePasswordDto);
     }
 
     @Override
     public Optional<UserDto> login(LoginRequestDto loginRequestDto) {
         String url = userServiceUrl + "/api/v1/users/login";
-        UserDto user = restTemplate.postForObject(url, loginRequestDto, UserDto.class);
-        return Optional.ofNullable(user);
+        return RestTemplateUtils.post(url, loginRequestDto, UserDto.class);
     }
 
     @Override
     public Optional<UserDto> register(NewUserDto newUserDto) {
         String url = userServiceUrl + "/api/v1/users/register";
-        UserDto userDto = restTemplate.postForObject(url, newUserDto, UserDto.class);
-        return Optional.ofNullable(userDto);
+        return RestTemplateUtils.post(url, newUserDto, UserDto.class);
     }
 
     @Autowired

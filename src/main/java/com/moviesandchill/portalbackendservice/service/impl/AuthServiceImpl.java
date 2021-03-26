@@ -90,6 +90,6 @@ public class AuthServiceImpl implements AuthService {
 
         long userId = (long) auth.getPrincipal();
 
-        return Optional.of(userService.getUser(userId));
+        return userService.getUser(userId);
     }
 }
