@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.service;
+package com.moviesandchill.portalbackendservice.service.user;
 
 import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.dto.password.UpdatePasswordDto;

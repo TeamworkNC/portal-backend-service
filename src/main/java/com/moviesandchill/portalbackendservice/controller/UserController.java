@@ -5,7 +5,7 @@ import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
-import com.moviesandchill.portalbackendservice.service.UserService;
+import com.moviesandchill.portalbackendservice.service.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;

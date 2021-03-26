@@ -1,8 +1,8 @@
-package com.moviesandchill.portalbackendservice.service.impl;
+package com.moviesandchill.portalbackendservice.service.impl.user;
 
 import com.moviesandchill.portalbackendservice.dto.achievement.AchievementDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
-import com.moviesandchill.portalbackendservice.service.UserAchievementService;
+import com.moviesandchill.portalbackendservice.service.user.UserAchievementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

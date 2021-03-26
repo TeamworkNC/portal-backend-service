@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.service;
+package com.moviesandchill.portalbackendservice.service.user;
 
 import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
 

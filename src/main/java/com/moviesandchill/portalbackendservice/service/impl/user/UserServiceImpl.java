@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.service.impl;
+package com.moviesandchill.portalbackendservice.service.impl.user;
 
 import com.moviesandchill.portalbackendservice.dto.achievement.AchievementDto;
 import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
@@ -10,10 +10,10 @@ import com.moviesandchill.portalbackendservice.dto.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.mapper.UserMapper;
-import com.moviesandchill.portalbackendservice.service.UserAchievementService;
-import com.moviesandchill.portalbackendservice.service.UserFriendService;
-import com.moviesandchill.portalbackendservice.service.UserGlobalRoleService;
-import com.moviesandchill.portalbackendservice.service.UserService;
+import com.moviesandchill.portalbackendservice.service.user.UserAchievementService;
+import com.moviesandchill.portalbackendservice.service.user.UserFriendService;
+import com.moviesandchill.portalbackendservice.service.user.UserGlobalRoleService;
+import com.moviesandchill.portalbackendservice.service.user.UserService;
 import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
