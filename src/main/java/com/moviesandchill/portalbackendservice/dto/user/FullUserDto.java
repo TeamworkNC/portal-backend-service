@@ -20,6 +20,8 @@ public class FullUserDto {
 
     private String login;
 
+    private String email;
+
     private String firstName;
 
     private String lastName;
