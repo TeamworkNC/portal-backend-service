@@ -6,8 +6,8 @@ import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
 import com.moviesandchill.portalbackendservice.security.SimpleAuthentication;
 import com.moviesandchill.portalbackendservice.service.AuthService;
-import com.moviesandchill.portalbackendservice.service.UserGlobalRoleService;
-import com.moviesandchill.portalbackendservice.service.UserService;
+import com.moviesandchill.portalbackendservice.service.user.UserGlobalRoleService;
+import com.moviesandchill.portalbackendservice.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -90,6 +90,6 @@ public class AuthServiceImpl implements AuthService {
 
         long userId = (long) auth.getPrincipal();
 
-        return Optional.of(userService.getUser(userId));
+        return userService.getUser(userId);
     }
 }

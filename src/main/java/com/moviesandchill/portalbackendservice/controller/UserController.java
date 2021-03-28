@@ -4,7 +4,9 @@ import com.moviesandchill.portalbackendservice.dto.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
-import com.moviesandchill.portalbackendservice.service.UserService;
+import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
+import com.moviesandchill.portalbackendservice.service.user.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +20,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final CommonMapper commonMapper;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CommonMapper commonMapper) {
         this.userService = userService;
+        this.commonMapper = commonMapper;
     }
 
     @GetMapping
@@ -30,8 +34,8 @@ public class UserController {
 
     @PostMapping
     @Secured("ROLE_ADMIN")
-    public UserDto addUser(@RequestBody NewUserDto newUserDto) {
-        return userService.addUser(newUserDto);
+    public ResponseEntity<UserDto> addUser(@RequestBody NewUserDto newUserDto) {
+        return commonMapper.toResponseEntity(userService.addUser(newUserDto));
     }
 
     @DeleteMapping
@@ -41,15 +45,14 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public FullUserDto getUser(@PathVariable long userId) {
-        return userService.getFullUser(userId);
+    public ResponseEntity<FullUserDto> getUser(@PathVariable long userId) {
+        return commonMapper.toResponseEntity(userService.getFullUser(userId));
     }
 
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable long userId) {
-        userService.deleteUser(userId);
+        commonMapper.toResponseEntity(userService.deleteUser(userId));
     }
-
 
     @PutMapping("/{userId}/password")
     public boolean updateUserPassword(@PathVariable long userId, @RequestBody UpdatePasswordDto updatePasswordDto) {

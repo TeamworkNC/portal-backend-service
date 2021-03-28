@@ -1,8 +1,8 @@
-package com.moviesandchill.portalbackendservice.service.impl;
+package com.moviesandchill.portalbackendservice.service.impl.user;
 
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
-import com.moviesandchill.portalbackendservice.service.UserFriendService;
+import com.moviesandchill.portalbackendservice.service.user.UserFriendService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
