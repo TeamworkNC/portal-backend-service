@@ -88,13 +88,13 @@ public class FilmController {
     }
 
     @GetMapping("/{filmId}/screenshots")
-    public List<ScreenshotDto> getAllScreenshotWithFilm(Long film_id) {
+    public List<ScreenshotDto> getAllScreenshotWithFilm(@PathVariable Long film_id) {
         return filmService.getAllScreenshotWithFilm(film_id);
     }
 
     @PostMapping("/{filmId}/addScreenshot/{reviewId}")
     @Secured("ROLE_ADMIN")
-    public void addScreenshotToFilm(Long film_id, Long screenshot_id) throws Exception {
+    public void addScreenshotToFilm(@PathVariable Long film_id,@PathVariable Long screenshot_id) throws Exception {
         filmService.addScreenshotToFilm(film_id,screenshot_id);
     }
 }
