@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<FullUserDto> getFullUser(long userId) {
         var userDtoOptional = getUser(userId);
-        if (userDtoOptional.isPresent()) {
+        if (userDtoOptional.isEmpty()) {
             return Optional.empty();
         }
         var userDto = userDtoOptional.get();
