@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
-                .mvcMatchers("/api/v1/public/**").permitAll()
-                .mvcMatchers("/api/v1/**").hasRole("USER");
+                .mvcMatchers("**").permitAll();
+//                .mvcMatchers("/api/v1/**").hasRole("USER");
     }
 }
