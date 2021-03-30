@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.dto.staff;
+package com.moviesandchill.portalbackendservice.dto.user.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StaffDto {
-    private Long staffId;
+public class LoginRequestDto {
+    private String login;
+
+    private String password;
 }

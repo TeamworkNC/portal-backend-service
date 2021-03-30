@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.dto.achievement;
+package com.moviesandchill.portalbackendservice.dto.user.globalrole;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AchievementDto {
-    private Long achievementId;
-
+public class GlobalRoleDto {
+    private Long globalRoleId;
     private String name;
-
-    private String logoUrl;
-
-    private String description;
 }

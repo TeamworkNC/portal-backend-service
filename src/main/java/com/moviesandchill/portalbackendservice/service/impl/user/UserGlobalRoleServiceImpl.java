@@ -1,6 +1,6 @@
 package com.moviesandchill.portalbackendservice.service.impl.user;
 
-import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
+import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.user.UserGlobalRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.dto.film;
+package com.moviesandchill.portalbackendservice.dto.film.country;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StaffRoleDto {
+public class CountryDto {
 
-    private Long id_staff_role;
+    private Long id_country;
 
-    private String role_title;
+    private String country_name;
 }

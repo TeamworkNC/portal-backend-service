@@ -1,19 +1,21 @@
 package com.moviesandchill.portalbackendservice.controller;
 
-import com.moviesandchill.portalbackendservice.dto.film.*;
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
+import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
+import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
+import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
-import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController()
 @RequestMapping(
-        path = "films",
+        path = "api/v1/films",
         produces = "application/json"
 )
 public class FilmController {
@@ -48,7 +50,7 @@ public class FilmController {
         return commonMapper.toResponseEntity(filmService.addFilm(film_dto));
     }
 
-    @DeleteMapping("filmId")
+    @DeleteMapping("/{filmId}")
     @Secured("ROLE_ADMIN")
     public void deleteFilmById(@PathVariable Long filmId) {
         commonMapper.toResponseEntity(filmService.getFilmById(filmId));
@@ -61,8 +63,8 @@ public class FilmController {
 
     @PostMapping("/{filmId}/addGenre/{genreId}")
     @Secured("ROLE_ADMIN")
-    public void addGenreToFilm(@PathVariable Long filmId,@PathVariable Long genreId) throws Exception {
-        filmService.addGenreToFilm(filmId,genreId);
+    public void addGenreToFilm(@PathVariable Long filmId, @PathVariable Long genreId) throws Exception {
+        filmService.addGenreToFilm(filmId, genreId);
     }
 
     @GetMapping("/{filmId}/staffs")
@@ -72,8 +74,8 @@ public class FilmController {
 
     @PostMapping("/{filmId}/addStaff/{staffId}")
     @Secured("ROLE_ADMIN")
-    public void addStaffToFilm(@PathVariable Long filmId,@PathVariable Long staffId) throws Exception {
-        filmService.addStaffToFilm(filmId,staffId);
+    public void addStaffToFilm(@PathVariable Long filmId, @PathVariable Long staffId) throws Exception {
+        filmService.addStaffToFilm(filmId, staffId);
     }
 
     @GetMapping("/{filmId}/reviews")
@@ -83,8 +85,8 @@ public class FilmController {
 
     @PostMapping("/{filmId}/addReview/{reviewId}")
     @Secured("ROLE_ADMIN")
-    public void addReviewToFilm(@PathVariable Long filmId,@PathVariable Long reviewId) throws Exception {
-        filmService.addReviewToFilm(filmId,reviewId);
+    public void addReviewToFilm(@PathVariable Long filmId, @PathVariable Long reviewId) throws Exception {
+        filmService.addReviewToFilm(filmId, reviewId);
     }
 
     @GetMapping("/{filmId}/screenshots")
@@ -94,7 +96,7 @@ public class FilmController {
 
     @PostMapping("/{filmId}/addScreenshot/{screenshotId}")
     @Secured("ROLE_ADMIN")
-    public void addScreenshotToFilm(@PathVariable Long filmId,@PathVariable Long screenshotId) throws Exception {
-        filmService.addScreenshotToFilm(filmId,screenshotId);
+    public void addScreenshotToFilm(@PathVariable Long filmId, @PathVariable Long screenshotId) throws Exception {
+        filmService.addScreenshotToFilm(filmId, screenshotId);
     }
 }

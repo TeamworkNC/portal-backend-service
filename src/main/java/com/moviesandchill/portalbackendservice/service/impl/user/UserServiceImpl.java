@@ -1,13 +1,13 @@
 package com.moviesandchill.portalbackendservice.service.impl.user;
 
-import com.moviesandchill.portalbackendservice.dto.achievement.AchievementDto;
-import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
-import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
-import com.moviesandchill.portalbackendservice.dto.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.dto.user.achievement.AchievementDto;
+import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
+import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.dto.user.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.mapper.UserMapper;
 import com.moviesandchill.portalbackendservice.service.user.UserAchievementService;

@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.dto.achievement;
+package com.moviesandchill.portalbackendservice.dto.user.achievement;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

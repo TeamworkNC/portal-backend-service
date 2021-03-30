@@ -1,6 +1,6 @@
 package com.moviesandchill.portalbackendservice.service.user;
 
-import com.moviesandchill.portalbackendservice.dto.achievement.AchievementDto;
+import com.moviesandchill.portalbackendservice.dto.user.achievement.AchievementDto;
 
 import java.util.List;
 
