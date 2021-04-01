@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.dto.film;
+package com.moviesandchill.portalbackendservice.dto.film.genre;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ScreenshotDto {
+public class GenreDto {
 
-    private Long id_screenshot;
+    private Long id_genre;
 
-    private String screenshot;
+    private String genre_title;
 }

@@ -1,9 +1,9 @@
 package com.moviesandchill.portalbackendservice.service.impl;
 
-import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
-import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
+import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.security.SimpleAuthentication;
 import com.moviesandchill.portalbackendservice.service.AuthService;
 import com.moviesandchill.portalbackendservice.service.user.UserGlobalRoleService;

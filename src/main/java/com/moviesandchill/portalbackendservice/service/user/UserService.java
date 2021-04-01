@@ -1,11 +1,11 @@
 package com.moviesandchill.portalbackendservice.service.user;
 
-import com.moviesandchill.portalbackendservice.dto.login.LoginRequestDto;
-import com.moviesandchill.portalbackendservice.dto.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.dto.user.password.UpdatePasswordDto;
 
 import java.util.List;
 import java.util.Optional;

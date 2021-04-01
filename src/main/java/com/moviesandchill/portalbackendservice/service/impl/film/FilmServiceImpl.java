@@ -1,7 +1,10 @@
-package com.moviesandchill.portalbackendservice.service.filmImpl;
+package com.moviesandchill.portalbackendservice.service.impl.film;
 
-import com.moviesandchill.portalbackendservice.dto.film.*;
-import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
+import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
+import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
+import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
 import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
@@ -67,8 +70,8 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void addGenreToFilm(Long film_id, Long genre_id) throws Exception {
-        String url = filmServiceUrl + "/films/" + film_id +"/addGenre/" + genre_id;
-        RestTemplateUtils.post(url,null);
+        String url = filmServiceUrl + "/films/" + film_id + "/addGenre/" + genre_id;
+        RestTemplateUtils.post(url, null);
     }
 
     @Override
@@ -80,8 +83,8 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void addStaffToFilm(Long film_id, Long staff_id) throws Exception {
-        String url = filmServiceUrl + "/films/" + film_id +"/addStaff/" + staff_id;
-        RestTemplateUtils.post(url,null);
+        String url = filmServiceUrl + "/films/" + film_id + "/addStaff/" + staff_id;
+        RestTemplateUtils.post(url, null);
     }
 
     @Override
@@ -93,8 +96,8 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void addReviewToFilm(Long film_id, Long review_id) throws Exception {
-        String url = filmServiceUrl + "/films/" + film_id +"/addReview/" + review_id;
-        RestTemplateUtils.post(url,null);
+        String url = filmServiceUrl + "/films/" + film_id + "/addReview/" + review_id;
+        RestTemplateUtils.post(url, null);
     }
 
     @Override
@@ -106,8 +109,8 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void addScreenshotToFilm(Long film_id, Long screenshot_id) throws Exception {
-        String url = filmServiceUrl + "/films/" + film_id +"/addScreenshot/" + screenshot_id;
-        RestTemplateUtils.post(url,null);
+        String url = filmServiceUrl + "/films/" + film_id + "/addScreenshot/" + screenshot_id;
+        RestTemplateUtils.post(url, null);
     }
 
     @Autowired

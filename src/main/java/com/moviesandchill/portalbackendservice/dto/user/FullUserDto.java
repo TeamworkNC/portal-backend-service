@@ -1,7 +1,7 @@
 package com.moviesandchill.portalbackendservice.dto.user;
 
-import com.moviesandchill.portalbackendservice.dto.achievement.AchievementDto;
-import com.moviesandchill.portalbackendservice.dto.globalrole.GlobalRoleDto;
+import com.moviesandchill.portalbackendservice.dto.user.achievement.AchievementDto;
+import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
