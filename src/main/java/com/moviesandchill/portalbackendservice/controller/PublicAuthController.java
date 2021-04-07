@@ -1,7 +1,6 @@
 package com.moviesandchill.portalbackendservice.controller;
 
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
-import com.moviesandchill.portalbackendservice.dto.user.UserDto;
 import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.AuthService;
@@ -29,7 +28,7 @@ public class PublicAuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<Long> login(@RequestBody LoginRequestDto loginRequestDto) {
         var userOptional = authService.login(loginRequestDto);
         return commonMapper.toResponseEntity(userOptional);
     }
