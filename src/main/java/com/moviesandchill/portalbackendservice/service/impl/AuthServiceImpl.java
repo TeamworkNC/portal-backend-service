@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Optional<UserDto> login(LoginRequestDto loginRequestDto) {
+    public Optional<Long> login(LoginRequestDto loginRequestDto) {
         log.info("try login user");
         var userOptional = userService.login(loginRequestDto);
 
@@ -51,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
         Authentication authentication = new SimpleAuthentication(userId, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return Optional.of(user);
+        return Optional.of(user.getUserId());
     }
 
     @Override

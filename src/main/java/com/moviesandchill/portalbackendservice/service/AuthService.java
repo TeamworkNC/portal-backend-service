@@ -7,7 +7,7 @@ import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
 import java.util.Optional;
 
 public interface AuthService {
-    Optional<UserDto> login(LoginRequestDto loginRequestDto);
+    Optional<Long> login(LoginRequestDto loginRequestDto);
 
     Optional<Long> register(NewUserDto newUserDto);
 
