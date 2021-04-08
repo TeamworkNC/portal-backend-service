@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.dto.user;
 
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.user.achievement.AchievementDto;
 import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,8 @@ public class FullUserDto {
     private List<UserDto> friends;
 
     private List<AchievementDto> achievements;
+
+    private List<FilmDto> recommendedFilms;
 
 //    private Set<FilmDto> favoriteFilms;
 //
