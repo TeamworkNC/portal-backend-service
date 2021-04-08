@@ -4,13 +4,16 @@
       "name": "endpoint.user-service.url",
       "type": "java.lang.String",
       "description": "user service url."
-    }
-  ],
-  "properties": [
+    },
     {
       "name": "endpoint.film-service.url",
       "type": "java.lang.String",
       "description": "user service url."
+    },
+    {
+      "name": "endpoint.recommendation-service.url",
+      "type": "java.lang.String",
+      "description": "Description for endpoint.recommendation-service.url."
     }
   ]
 }
