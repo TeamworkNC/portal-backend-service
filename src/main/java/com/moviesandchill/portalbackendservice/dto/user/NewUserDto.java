@@ -18,9 +18,5 @@ public class NewUserDto {
 
     private LocalDate birthday;
 
-    private String logoUrl;
-
-    private String description;
-
     private String password;
 }
