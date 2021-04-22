@@ -114,7 +114,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Autowired
-    public void setUserServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
+    public void setFilmServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
         this.filmServiceUrl = filmServiceUrl;
     }
 }
