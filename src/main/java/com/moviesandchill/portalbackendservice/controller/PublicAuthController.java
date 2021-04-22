@@ -2,6 +2,7 @@ package com.moviesandchill.portalbackendservice.controller;
 
 import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.security.JwtTokenProvider;
 import com.moviesandchill.portalbackendservice.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @RestController()
@@ -21,32 +23,42 @@ import java.util.Map;
 public class PublicAuthController {
 
     private final AuthService authService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public PublicAuthController(AuthService authService) {
+    public PublicAuthController(AuthService authService, JwtTokenProvider jwtTokenProvider) {
         this.authService = authService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     //TODO логику вынести в из контроллера?
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
         var userIdOptional = authService.login(loginRequestDto);
-        if (userIdOptional.isPresent()) {
-            Long userId = userIdOptional.get();
-            var jsonMap = Map.of("userId", userId);
-            return ResponseEntity.ok(jsonMap);
+        if (userIdOptional.isEmpty()) {
+            return createBadRequest();
         }
-        return createBadRequest();
+
+        var userId = userIdOptional.get();
+        var token = jwtTokenProvider.createToken(userId);
+        jwtTokenProvider.setTokenToResponse(res, token);
+
+        var jsonMap = Map.of("userId", userId);
+        return ResponseEntity.ok(jsonMap);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody NewUserDto newUserDto) {
+    public ResponseEntity<?> register(@RequestBody NewUserDto newUserDto, HttpServletResponse res) {
         var userIdOptional = authService.register(newUserDto);
-        if (userIdOptional.isPresent()) {
-            Long userId = userIdOptional.get();
-            var jsonMap = Map.of("userId", userId);
-            return ResponseEntity.ok(jsonMap);
+        if (userIdOptional.isEmpty()) {
+            return createBadRequest();
         }
-        return createBadRequest();
+
+        var userId = userIdOptional.get();
+        var token = jwtTokenProvider.createToken(userId);
+        jwtTokenProvider.setTokenToResponse(res, token);
+
+        var jsonMap = Map.of("userId", userId);
+        return ResponseEntity.ok(jsonMap);
     }
 
     private ResponseEntity<?> createBadRequest() {
