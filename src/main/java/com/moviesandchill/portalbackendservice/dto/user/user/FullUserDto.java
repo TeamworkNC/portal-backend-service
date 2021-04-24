@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.dto.user;
+package com.moviesandchill.portalbackendservice.dto.user.user;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.user.achievement.AchievementDto;

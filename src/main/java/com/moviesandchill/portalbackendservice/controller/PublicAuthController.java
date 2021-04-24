@@ -1,6 +1,6 @@
 package com.moviesandchill.portalbackendservice.controller;
 
-import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
+import com.moviesandchill.portalbackendservice.dto.user.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.security.JwtTokenProvider;
 import com.moviesandchill.portalbackendservice.service.AuthService;

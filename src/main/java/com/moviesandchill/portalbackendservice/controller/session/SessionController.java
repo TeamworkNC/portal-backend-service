@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.controller;
+package com.moviesandchill.portalbackendservice.controller.session;
 
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionParDto;

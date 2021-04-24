@@ -1,15 +1,47 @@
 package com.moviesandchill.portalbackendservice.service.user;
 
 import com.moviesandchill.portalbackendservice.dto.user.achievement.AchievementDto;
+import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-public interface UserAchievementService {
-    List<AchievementDto> getAllAchievements(long userId);
+@Service
+@Slf4j
+public class UserAchievementService {
 
-    boolean addAchievement(long userId, long achievementId);
+    private String userServiceUrl;
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final CommonMapper commonMapper;
 
-    boolean deleteAllAchievements(long userId);
+    public UserAchievementService(CommonMapper commonMapper) {
+        this.commonMapper = commonMapper;
+    }
 
-    boolean deleteAchievement(long userId, long achievementId);
+    public List<AchievementDto> getAllAchievements(long userId) {
+        String url = userServiceUrl + "/api/v1/users/" + userId + "/achievements";
+        AchievementDto[] dtos = restTemplate.getForObject(url, AchievementDto[].class);
+        return commonMapper.toList(dtos);
+    }
+
+    public boolean addAchievement(long userId, long achievementId) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean deleteAllAchievements(long userId) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean deleteAchievement(long userId, long achievementId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Autowired
+    public void setUserServiceUrl(@Value("${endpoint.user-service.url}") String userServiceUrl) {
+        this.userServiceUrl = userServiceUrl;
+    }
 }

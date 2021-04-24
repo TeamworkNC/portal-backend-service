@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.service.impl.recommendation;
+package com.moviesandchill.portalbackendservice.service.recommendation.impl;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
