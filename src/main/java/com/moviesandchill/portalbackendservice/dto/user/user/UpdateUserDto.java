@@ -1,20 +1,17 @@
-package com.moviesandchill.portalbackendservice.dto.user;
+package com.moviesandchill.portalbackendservice.dto.user.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto implements Serializable {
-    private Long userId;
-
+public class UpdateUserDto {
     private String login;
 
     private String email;
@@ -24,6 +21,4 @@ public class UserDto implements Serializable {
     private String logoUrl;
 
     private String description;
-
-    private LocalDate registrationDate;
 }

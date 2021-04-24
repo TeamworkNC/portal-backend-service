@@ -1,8 +1,8 @@
-package com.moviesandchill.portalbackendservice.controller;
+package com.moviesandchill.portalbackendservice.controller.user;
 
-import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
-import com.moviesandchill.portalbackendservice.dto.user.NewUserDto;
-import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.dto.user.user.FullUserDto;
+import com.moviesandchill.portalbackendservice.dto.user.user.NewUserDto;
+import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
 import com.moviesandchill.portalbackendservice.dto.user.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.user.UserService;

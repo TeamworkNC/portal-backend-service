@@ -1,7 +1,7 @@
 package com.moviesandchill.portalbackendservice.mapper;
 
-import com.moviesandchill.portalbackendservice.dto.user.FullUserDto;
-import com.moviesandchill.portalbackendservice.dto.user.UserDto;
+import com.moviesandchill.portalbackendservice.dto.user.user.FullUserDto;
+import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;

@@ -1,4 +1,4 @@
-package com.moviesandchill.portalbackendservice.service.impl.film;
+package com.moviesandchill.portalbackendservice.service.film.impl;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
