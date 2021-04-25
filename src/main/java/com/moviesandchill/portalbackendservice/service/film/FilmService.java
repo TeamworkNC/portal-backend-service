@@ -1,6 +1,9 @@
 package com.moviesandchill.portalbackendservice.service.film;
 
+import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
+import com.moviesandchill.portalbackendservice.dto.film.country.CountryDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
@@ -16,6 +19,22 @@ public interface FilmService {
     void deleteAllFilm();
 
     Optional<FilmDto> getFilmById(Long film_id);
+
+    Optional<FullFilmDto> getFullFilmById(Long film_id);
+
+    float getRatingFilmById(Long film_id);
+
+    List<StaffDto> getAllActorsByFilm(Long film_id) ;
+
+    List<StaffDto> getAllProducersByFilm(Long film_id) ;
+
+    Optional<AgeLimitDto> getAgeLimitByFilmId(Long film_id);
+
+    void setAgeLimitByFilmId(Long film_id,Long ageLimitID) throws Exception;
+
+    Optional<CountryDto> getCountryByFilmId(Long film_id);
+
+    void setCountryByFilmId(Long film_id,Long countryID) throws Exception;
 
     Optional<FilmDto> addFilm(FilmDto film_dto);
 
