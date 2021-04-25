@@ -30,17 +30,11 @@ public class AuthService {
         this.userGlobalRoleService = userGlobalRoleService;
     }
 
-    public Optional<Long> login(LoginRequestDto loginRequestDto) {
+    public Long login(LoginRequestDto loginRequestDto) {
         log.info("try login user");
-        var userOptional = userService.login(loginRequestDto);
+        UserDto userDto = userService.login(loginRequestDto);
 
-        if (userOptional.isEmpty()) {
-            log.info("user not found");
-            return Optional.empty();
-        }
-
-        UserDto user = userOptional.get();
-        long userId = user.getUserId();
+        long userId = userDto.getUserId();
         log.info("user id: " + userId);
 
         List<GlobalRoleDto> globalRoles = userGlobalRoleService.getAllGlobalRoles(userId);
@@ -49,25 +43,20 @@ public class AuthService {
         Authentication authentication = new SimpleAuthentication(userId, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return Optional.of(user.getUserId());
+        return userDto.getUserId();
     }
 
     public Optional<Long> register(NewUserDto newUserDto) {
         log.info("try register user");
-        Optional<UserDto> userOptional = userService.register(newUserDto);
+        UserDto userDto = userService.register(newUserDto);
 
-        if (userOptional.isEmpty()) {
-            return Optional.empty();
-        }
-        UserDto user = userOptional.get();
-
-        List<GlobalRoleDto> globalRoles = userGlobalRoleService.getAllGlobalRoles(user.getUserId());
+        List<GlobalRoleDto> globalRoles = userGlobalRoleService.getAllGlobalRoles(userDto.getUserId());
         List<GrantedAuthority> authorities = toGrantedAuthorities(globalRoles);
         log.info("authorities: " + authorities);
 
-        Authentication authentication = new SimpleAuthentication(user.getUserId(), authorities);
+        Authentication authentication = new SimpleAuthentication(userDto.getUserId(), authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return Optional.of(user.getUserId());
+        return Optional.of(userDto.getUserId());
     }
 
 
@@ -75,17 +64,5 @@ public class AuthService {
         return globalRoleDtos.stream()
                 .map(globalRoleDto -> new SimpleGrantedAuthority("ROLE_" + globalRoleDto.getName()))
                 .collect(Collectors.toList());
-    }
-
-    public Optional<UserDto> getCurrentUser() {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (auth == null) {
-            return Optional.empty();
-        }
-
-        long userId = (long) auth.getPrincipal();
-
-        return userService.getUser(userId);
     }
 }

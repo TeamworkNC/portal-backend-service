@@ -33,12 +33,7 @@ public class PublicAuthController {
     //TODO логику вынести в из контроллера?
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
-        var userIdOptional = authService.login(loginRequestDto);
-        if (userIdOptional.isEmpty()) {
-            return createBadRequest();
-        }
-
-        var userId = userIdOptional.get();
+        var userId = authService.login(loginRequestDto);
         var token = jwtTokenProvider.createToken(userId);
         jwtTokenProvider.setTokenToResponse(res, token);
 

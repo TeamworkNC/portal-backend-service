@@ -1,13 +1,13 @@
 package com.moviesandchill.portalbackendservice.controller.user;
 
+import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
+import com.moviesandchill.portalbackendservice.dto.user.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.NewUserDto;
+import com.moviesandchill.portalbackendservice.dto.user.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
-import com.moviesandchill.portalbackendservice.dto.user.password.UpdatePasswordDto;
-import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.user.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +17,13 @@ import java.util.List;
         path = "api/v1/users",
         produces = "application/json"
 )
+@Slf4j
 public class UserController {
 
     private final UserService userService;
-    private final CommonMapper commonMapper;
 
-    public UserController(UserService userService, CommonMapper commonMapper) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.commonMapper = commonMapper;
     }
 
     @GetMapping
@@ -32,30 +31,44 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping
-    @Secured("ROLE_ADMIN")
-    public ResponseEntity<UserDto> addUser(@RequestBody NewUserDto newUserDto) {
-        return commonMapper.toResponseEntity(userService.addUser(newUserDto));
-    }
-
     @DeleteMapping
-    @Secured("ROLE_ADMIN")
     public void deleteAllUsers() {
         userService.deleteAllUsers();
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<FullUserDto> getUser(@PathVariable long userId) {
-        return commonMapper.toResponseEntity(userService.getFullUser(userId));
+    public FullUserDto getUserById(@PathVariable long userId) {
+        return userService.getFullUser(userId);
+    }
+
+    @PostMapping
+    public UserDto addUser(@RequestBody NewUserDto newUserDto) {
+        return userService.addUser(newUserDto);
+    }
+
+    @PutMapping("/{userId}")
+    public void updateUser(@PathVariable long userId, @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUser(userId, updateUserDto);
     }
 
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable long userId) {
-        commonMapper.toResponseEntity(userService.deleteUser(userId));
+        userService.deleteUser(userId);
     }
 
+
     @PutMapping("/{userId}/password")
-    public boolean updateUserPassword(@PathVariable long userId, @RequestBody UpdatePasswordDto updatePasswordDto) {
-        return userService.updateUserPassword(userId, updatePasswordDto);
+    public void updateUserPassword(@PathVariable long userId, @RequestBody UpdatePasswordDto updatePasswordDto) {
+        userService.updateUserPassword(userId, updatePasswordDto);
+    }
+
+    @PostMapping("/login")
+    public UserDto login(@RequestBody LoginRequestDto loginRequestDto) {
+        return userService.login(loginRequestDto);
+    }
+
+    @PostMapping("/register")
+    public UserDto register(@RequestBody NewUserDto newUserDto) {
+        return userService.register(newUserDto);
     }
 }
