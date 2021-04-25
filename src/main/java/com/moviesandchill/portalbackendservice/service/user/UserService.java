@@ -1,25 +1,21 @@
 package com.moviesandchill.portalbackendservice.service.user;
 
-import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
-import com.moviesandchill.portalbackendservice.dto.user.achievement.AchievementDto;
-import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
 import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.dto.user.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
-import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.mapper.UserMapper;
-import com.moviesandchill.portalbackendservice.service.recommendation.RecommendationService;
-import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -27,87 +23,73 @@ public class UserService {
 
     private String userServiceUrl;
 
-    private UserFriendService userFriendService;
-    private UserAchievementService userAchievementService;
     private UserGlobalRoleService userGlobalRoleService;
-    private RecommendationService recommendationService;
+    private UserAchievementService userAchievementService;
+    private UserFavoriteFilmService userFavoriteFilmService;
+    private UserFavoriteStaffService userFavoriteStaffService;
+    private UserWantWatchFilmService userWantWatchFilmService;
+    private UserWatchedFilmService userWatchedFilmService;
 
-    private final UserMapper userMapper;
-    private final CommonMapper commonMapper;
-
-    @Autowired
-    public UserService(UserMapper userMapper, CommonMapper commonMapper) {
-        this.userMapper = userMapper;
-        this.commonMapper = commonMapper;
-    }
+    private RestTemplate restTemplate;
+    private UserMapper userMapper;
 
     public List<UserDto> getAllUsers() {
         String url = userServiceUrl + "/api/v1/users";
-        Optional<UserDto[]> userDtosOptional = RestTemplateUtils.get(url, UserDto[].class);
-        return commonMapper.toList(userDtosOptional);
+        var dtos = restTemplate.getForObject(url, UserDto[].class);
+        return Arrays.asList(Objects.requireNonNull(dtos));
     }
 
-    public Optional<UserDto> addUser(NewUserDto newUserDto) {
+    public UserDto addUser(NewUserDto newUserDto) {
         String url = userServiceUrl + "/api/v1/users";
-        return RestTemplateUtils.post(url, newUserDto, UserDto.class);
+        return restTemplate.postForObject(url, newUserDto, UserDto.class);
     }
 
-    public boolean deleteAllUsers() {
+    public void deleteAllUsers() {
         String url = userServiceUrl + "/api/v1/users";
-        return RestTemplateUtils.delete(url);
+        restTemplate.delete(url);
     }
 
-    public Optional<UserDto> getUser(long userId) {
+    public UserDto getUser(long userId) {
         String url = userServiceUrl + "/api/v1/users/" + userId;
-        return RestTemplateUtils.get(url, null, UserDto.class);
+        return restTemplate.getForObject(url, UserDto.class);
     }
 
-    public Optional<FullUserDto> getFullUser(long userId) {
-        var userDtoOptional = getUser(userId);
-        if (userDtoOptional.isEmpty()) {
-            return Optional.empty();
-        }
-        var userDto = userDtoOptional.get();
+    public FullUserDto getFullUser(long userId) {
+        var userDto = getUser(userId);
+        var fullUserDto = userMapper.mapToFullDto(userDto);
 
-        FullUserDto fullUser = userMapper.mapToFullDto(userDto);
-
-        List<UserDto> friends = userFriendService.getAllFriends(userId);
-        fullUser.setFriends(friends);
-
-        List<AchievementDto> achievements = userAchievementService.getAllAchievements(userId);
-        fullUser.setAchievements(achievements);
-
-        List<GlobalRoleDto> globalRoles = userGlobalRoleService.getAllGlobalRoles(userId);
-        fullUser.setGlobalRoles(globalRoles);
-
-        List<FilmDto> recommendedFilms = recommendationService.recommend(userId);
-        fullUser.setRecommendedFilms(recommendedFilms);
-        return Optional.of(fullUser);
+        fullUserDto.setGlobalRoles(userGlobalRoleService.getAllGlobalRoles(userId));
+        fullUserDto.setAchievements(userAchievementService.getAllAchievements(userId));
+        fullUserDto.setFavoriteFilms(userFavoriteFilmService.getAllFavoriteFilms(userId));
+        fullUserDto.setFavoriteStaffs(userFavoriteStaffService.getAllFavoriteStaffs(userId));
+        fullUserDto.setWantWatchFilms(userWantWatchFilmService.getAllWantWatchFilms(userId));
+        fullUserDto.setWatchedFilms(userWatchedFilmService.getAllWatchedFilms(userId));
+        return fullUserDto;
     }
 
-    public boolean updateUser(long userId, UpdateUserDto updateUserDto) {
+    public void updateUser(long userId, UpdateUserDto updateUserDto) {
         String url = userServiceUrl + "/api/v1/users/" + userId;
-        return RestTemplateUtils.put(url, updateUserDto);
+        restTemplate.put(url, updateUserDto);
     }
 
-    public boolean deleteUser(long userId) {
+    public void deleteUser(long userId) {
         String url = userServiceUrl + "/api/v1/users/" + userId;
-        return RestTemplateUtils.delete(url);
+        restTemplate.delete(url);
     }
 
-    public boolean updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto) {
+    public void updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto) {
         String url = userServiceUrl + "/api/v1/users/" + userId + "/password";
-        return RestTemplateUtils.put(url, updatePasswordDto);
+        restTemplate.put(url, updatePasswordDto, Boolean.class);
     }
 
-    public Optional<UserDto> login(LoginRequestDto loginRequestDto) {
+    public UserDto login(LoginRequestDto loginRequestDto) {
         String url = userServiceUrl + "/api/v1/users/login";
-        return RestTemplateUtils.post(url, loginRequestDto, UserDto.class);
+        return restTemplate.postForObject(url, loginRequestDto, UserDto.class);
     }
 
-    public Optional<UserDto> register(NewUserDto newUserDto) {
+    public UserDto register(NewUserDto newUserDto) {
         String url = userServiceUrl + "/api/v1/users/register";
-        return RestTemplateUtils.post(url, newUserDto, UserDto.class);
+        return restTemplate.postForObject(url, newUserDto, UserDto.class);
     }
 
     @Autowired
@@ -116,8 +98,8 @@ public class UserService {
     }
 
     @Autowired
-    public void setUserFriendService(UserFriendService userFriendService) {
-        this.userFriendService = userFriendService;
+    public void setUserGlobalRoleService(UserGlobalRoleService userGlobalRoleService) {
+        this.userGlobalRoleService = userGlobalRoleService;
     }
 
     @Autowired
@@ -126,12 +108,32 @@ public class UserService {
     }
 
     @Autowired
-    public void setUserGlobalRoleService(UserGlobalRoleService userGlobalRoleService) {
-        this.userGlobalRoleService = userGlobalRoleService;
+    public void setUserFavoriteFilmService(UserFavoriteFilmService userFavoriteFilmService) {
+        this.userFavoriteFilmService = userFavoriteFilmService;
     }
 
     @Autowired
-    public void setRecommendationService(RecommendationService recommendationService) {
-        this.recommendationService = recommendationService;
+    public void setUserFavoriteStaffService(UserFavoriteStaffService userFavoriteStaffService) {
+        this.userFavoriteStaffService = userFavoriteStaffService;
+    }
+
+    @Autowired
+    public void setUserWantWatchFilmService(UserWantWatchFilmService userWantWatchFilmService) {
+        this.userWantWatchFilmService = userWantWatchFilmService;
+    }
+
+    @Autowired
+    public void setUserWatchedFilmService(UserWatchedFilmService userWatchedFilmService) {
+        this.userWatchedFilmService = userWatchedFilmService;
+    }
+
+    @Autowired
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
     }
 }

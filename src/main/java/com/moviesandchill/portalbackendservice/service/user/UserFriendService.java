@@ -1,49 +1,45 @@
 package com.moviesandchill.portalbackendservice.service.user;
 
 import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
-import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
 public class UserFriendService {
 
-    private String userServiceUrl;
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final CommonMapper commonMapper;
+    private final String userServiceUrl;
+    private final RestTemplate restTemplate;
 
-    public UserFriendService(CommonMapper commonMapper) {
-        this.commonMapper = commonMapper;
+    public UserFriendService(@Value("${endpoint.user-service.url}") String userServiceUrl, RestTemplate restTemplate) {
+        this.userServiceUrl = userServiceUrl;
+        this.restTemplate = restTemplate;
     }
-
 
     public List<UserDto> getAllFriends(long userId) {
         String url = userServiceUrl + "/api/v1/users/" + userId + "/friends";
-        UserDto[] dtos = restTemplate.getForObject(url, UserDto[].class);
-        return commonMapper.toList(dtos);
+        var dtos = restTemplate.getForObject(url, UserDto[].class);
+        return Arrays.asList(Objects.requireNonNull(dtos));
     }
 
-
-    public boolean addFriend(long userId, long friendId) {
-        throw new UnsupportedOperationException();
+    public void addFriend(long userId, long friendId) {
+        String url = userServiceUrl + "/api/v1/users/" + userId + "/friends";
+        restTemplate.postForObject(url, friendId, Void.class);
     }
 
-    public boolean deleteAllFriends(long userId) {
-        throw new UnsupportedOperationException();
+    public void deleteAllFriends(long userId) {
+        String url = userServiceUrl + "/api/v1/users/" + userId + "/friends";
+        restTemplate.delete(url);
     }
 
-    public boolean deleteFriend(long userId, long friendId) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Autowired
-    public void setUserServiceUrl(@Value("${endpoint.user-service.url}") String userServiceUrl) {
-        this.userServiceUrl = userServiceUrl;
+    public void deleteFriend(long userId, long friendId) {
+        String url = userServiceUrl + "/api/v1/users/" + userId + "/friends/" + friendId;
+        restTemplate.delete(url);
     }
 }
