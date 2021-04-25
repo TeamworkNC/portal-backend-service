@@ -1,6 +1,7 @@
 package com.moviesandchill.portalbackendservice.controller.film;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
@@ -44,6 +45,11 @@ public class FilmController {
         return commonMapper.toResponseEntity(filmService.getFilmById(filmId));
     }
 
+    @GetMapping("/full/{filmId}")
+    public ResponseEntity<FullFilmDto> getFullFilmById(Long filmId)  {
+        return commonMapper.toResponseEntity(filmService.getFullFilmById(filmId));
+    }
+
     @PostMapping
     @Secured("ROLE_ADMIN")
     public ResponseEntity<FilmDto> addFilm(@RequestBody FilmDto film_dto) {
@@ -53,7 +59,7 @@ public class FilmController {
     @DeleteMapping("/{filmId}")
     @Secured("ROLE_ADMIN")
     public void deleteFilmById(@PathVariable Long filmId) {
-        commonMapper.toResponseEntity(filmService.getFilmById(filmId));
+        filmService.deleteFilmById(filmId);
     }
 
     @GetMapping("/{filmId}/genres")
