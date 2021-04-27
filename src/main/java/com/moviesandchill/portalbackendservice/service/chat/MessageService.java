@@ -38,13 +38,13 @@ public class MessageService {
     }
 
     public List<MessageDto> getAllMessagesByChatId(long chatId) {
-        String url = chatServiceUrl + "/api/v1/messages?chat_id=" + chatId;
+        String url = chatServiceUrl + "/api/v1/chats/" + chatId + "/messages";
         var dtos = restTemplate.getForObject(url, MessageDto[].class);
         return Arrays.asList(Objects.requireNonNull(dtos));
     }
 
     public void deleteAllMessagesByChatId(long chatId) {
-        String url = chatServiceUrl + "/api/v1/messages?chat_id=" + chatId;
+        String url = chatServiceUrl + "/api/v1/chats/" + chatId + "/messages";
         restTemplate.delete(url);
     }
 
