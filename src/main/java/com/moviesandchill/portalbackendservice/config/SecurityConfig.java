@@ -25,11 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //FIXME ?
-                .and()
-                .authorizeRequests()
-                .mvcMatchers("/api/v1/public/**").permitAll()
-                .mvcMatchers("/api/v1/**").hasRole("USER")
-                .mvcMatchers("**").permitAll()
+//                .and()
+//                .authorizeRequests()
+//                .mvcMatchers("/api/v1/public/**").permitAll()
+//                .mvcMatchers("/api/v1/**").hasRole("USER")
+//                .mvcMatchers("**").permitAll()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
     }

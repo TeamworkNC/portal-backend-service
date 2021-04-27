@@ -93,6 +93,8 @@ public class JwtTokenProvider {
     public void setTokenToResponse(HttpServletResponse res, String token) {
         Cookie cookie = new Cookie(cookieName, token);
         cookie.setMaxAge(validityInMilliseconds);
+        cookie.setHttpOnly(false);
+        cookie.setSecure(false);
         cookie.setPath("/");
         res.addCookie(cookie);
     }
