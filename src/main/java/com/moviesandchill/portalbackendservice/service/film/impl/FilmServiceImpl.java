@@ -3,6 +3,7 @@ package com.moviesandchill.portalbackendservice.service.film.impl;
 import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
 import com.moviesandchill.portalbackendservice.dto.film.country.CountryDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +43,24 @@ public class FilmServiceImpl implements FilmService {
     public List<FilmDto> getAllFilm() {
         String url = filmServiceUrl + "/films";
         Optional<FilmDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, FilmDto[].class);
+        return commonMapper.toList(listFilmDtoOptional);
+    }
+
+    public List<FilmPageDto> getFirstNewFilms() {
+        String url = filmServiceUrl + "/films/newfilms";
+        Optional<FilmPageDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, FilmPageDto[].class);
+        return commonMapper.toList(listFilmDtoOptional);
+    }
+
+    public List<FilmPageDto> getRandomThreeFilms() {
+        String url = filmServiceUrl + "/films/randomthreefilms";
+        Optional<FilmPageDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, FilmPageDto[].class);
+        return commonMapper.toList(listFilmDtoOptional);
+    }
+
+    public List<FilmPageDto> getFirstPopularFilms() {
+        String url = filmServiceUrl + "/films/popularfilms";
+        Optional<FilmPageDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, FilmPageDto[].class);
         return commonMapper.toList(listFilmDtoOptional);
     }
 
@@ -108,7 +128,7 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public List<StaffDto> getAllProducersByFilm(Long film_id) {
-        String url = filmServiceUrl + "/films/" + film_id + "/actors";
+        String url = filmServiceUrl + "/films/" + film_id + "/producers";
         Optional<StaffDto[]> listProducersOptional = RestTemplateUtils.get(url, StaffDto[].class);
         return commonMapper.toList(listProducersOptional);
     }

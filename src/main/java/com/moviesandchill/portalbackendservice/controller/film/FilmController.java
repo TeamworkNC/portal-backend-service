@@ -1,6 +1,7 @@
 package com.moviesandchill.portalbackendservice.controller.film;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
@@ -8,11 +9,13 @@ import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
+import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController()
 @RequestMapping(
@@ -32,6 +35,21 @@ public class FilmController {
     @GetMapping
     public List<FilmDto> getAllFilm() {
         return filmService.getAllFilm();
+    }
+
+    @GetMapping("/newfilms")
+    public List<FilmPageDto> getFirstNewFilms() {
+        return filmService.getFirstNewFilms();
+    }
+
+    @GetMapping("/randomthreefilms")
+    public List<FilmPageDto> getRandomThreeFilms() {
+        return filmService.getRandomThreeFilms();
+    }
+
+    @GetMapping("/popularfilms")
+    public List<FilmPageDto> getFirstPopularFilms() {
+        return filmService.getFirstPopularFilms();
     }
 
     @DeleteMapping
