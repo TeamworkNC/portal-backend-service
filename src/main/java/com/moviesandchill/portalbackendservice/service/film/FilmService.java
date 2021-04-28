@@ -3,11 +3,13 @@ package com.moviesandchill.portalbackendservice.service.film;
 import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
 import com.moviesandchill.portalbackendservice.dto.film.country.CountryDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,12 @@ import java.util.Optional;
 public interface FilmService {
 
     List<FilmDto> getAllFilm();
+
+    public List<FilmPageDto> getFirstNewFilms();
+
+    public List<FilmPageDto> getRandomThreeFilms();
+
+    public List<FilmPageDto> getFirstPopularFilms();
 
     void deleteAllFilm();
 
