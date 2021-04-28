@@ -36,9 +36,14 @@ public class UserController {
         userService.deleteAllUsers();
     }
 
-    @GetMapping("/{userId}")
-    public FullUserDto getUserById(@PathVariable long userId) {
+    @GetMapping("full/{userId}")
+    public FullUserDto getFullUser(@PathVariable long userId) {
         return userService.getFullUser(userId);
+    }
+
+    @GetMapping("/{userId}")
+    public UserDto getUser(@PathVariable long userId) {
+        return userService.getUser(userId);
     }
 
     @PostMapping
