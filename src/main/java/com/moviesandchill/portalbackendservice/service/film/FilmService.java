@@ -11,12 +11,15 @@ import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public interface FilmService {
 
     List<FilmDto> getAllFilm();
+
+    public List<FilmPageDto> getAllPageFilm();
 
     public List<FilmPageDto> getFirstNewFilms();
 

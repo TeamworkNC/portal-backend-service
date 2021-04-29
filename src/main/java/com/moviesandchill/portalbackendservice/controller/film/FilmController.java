@@ -37,6 +37,11 @@ public class FilmController {
         return filmService.getAllFilm();
     }
 
+    @GetMapping("/allpage")
+    public List<FilmPageDto> getAllPageFilm() {
+        return filmService.getAllPageFilm();
+    }
+
     @GetMapping("/newfilms")
     public List<FilmPageDto> getFirstNewFilms() {
         return filmService.getFirstNewFilms();

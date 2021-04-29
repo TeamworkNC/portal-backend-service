@@ -46,6 +46,13 @@ public class FilmServiceImpl implements FilmService {
         return commonMapper.toList(listFilmDtoOptional);
     }
 
+    @Override
+    public List<FilmPageDto> getAllPageFilm() {
+        String url = filmServiceUrl + "/films/allpage";
+        Optional<FilmPageDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, FilmPageDto[].class);
+        return commonMapper.toList(listFilmDtoOptional);
+    }
+
     public List<FilmPageDto> getFirstNewFilms() {
         String url = filmServiceUrl + "/films/newfilms";
         Optional<FilmPageDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, FilmPageDto[].class);

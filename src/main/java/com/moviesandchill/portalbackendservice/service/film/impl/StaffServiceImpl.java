@@ -39,7 +39,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<StaffDto> getAllProducersStaff() {
-        String url = filmServiceUrl + "/staffs/actors";
+        String url = filmServiceUrl + "/staffs/producerss";
         Optional<StaffDto[]> listStaffDtoOptional = RestTemplateUtils.get(url,StaffDto[].class);
         return commonMapper.toList(listStaffDtoOptional);
     }
