@@ -24,21 +24,21 @@ import java.util.List;
 @Builder
 public class FullFilmDto {
 
-    private Long id_film;
+    private Long idFilm;
 
-    private String film_title;
+    private String filmTitle;
 
     private LocalDateTime duration;
 
-    private LocalDate release_date;
+    private LocalDate releaseDate;
 
-    private String film_poster;
+    private String filmPoster;
 
-    private String film_trailer;
+    private String filmTrailer;
 
-    private String film_video;
+    private String filmVideo;
 
-    private BigInteger film_budget;
+    private BigInteger filmBudget;
 
     private String description;
 
