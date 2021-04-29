@@ -34,6 +34,6 @@ public class FilmDto {
 
     private String description;
 
-    private Double rating;
+    private Float rating;
 
 }
