@@ -33,16 +33,15 @@ public class FilmServiceImpl implements FilmService {
 
     private final CommonMapper commonMapper;
 
-    private final UserService userService;
+    private UserService userService;
 
     private final FilmMapper filmMapper;
 
     private final ReviewMapper reviewMapper;
 
     @Autowired
-    public FilmServiceImpl(CommonMapper commonMapper,UserService userService,FilmMapper filmMapper,ReviewMapper reviewMapper) {
+    public FilmServiceImpl(CommonMapper commonMapper,FilmMapper filmMapper,ReviewMapper reviewMapper) {
         this.commonMapper = commonMapper;
-        this.userService = userService;
         this.filmMapper = filmMapper;
         this.reviewMapper = reviewMapper;
     }
@@ -246,5 +245,10 @@ public class FilmServiceImpl implements FilmService {
     @Autowired
     public void setFilmServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
         this.filmServiceUrl = filmServiceUrl;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }
