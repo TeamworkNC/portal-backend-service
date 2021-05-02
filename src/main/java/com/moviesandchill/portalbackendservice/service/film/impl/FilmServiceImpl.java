@@ -6,19 +6,22 @@ import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
+import com.moviesandchill.portalbackendservice.dto.film.review.FullReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.mapper.FilmMapper;
+import com.moviesandchill.portalbackendservice.mapper.ReviewMapper;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
+import com.moviesandchill.portalbackendservice.service.user.UserService;
 import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +33,18 @@ public class FilmServiceImpl implements FilmService {
 
     private final CommonMapper commonMapper;
 
+    private final UserService userService;
+
     private final FilmMapper filmMapper;
 
+    private final ReviewMapper reviewMapper;
+
     @Autowired
-    public FilmServiceImpl(CommonMapper commonMapper,FilmMapper filmMapper) {
+    public FilmServiceImpl(CommonMapper commonMapper,UserService userService,FilmMapper filmMapper,ReviewMapper reviewMapper) {
         this.commonMapper = commonMapper;
+        this.userService = userService;
         this.filmMapper = filmMapper;
+        this.reviewMapper = reviewMapper;
     }
 
 
@@ -108,7 +117,13 @@ public class FilmServiceImpl implements FilmService {
             fullFilmDto.setProducers(producers);
 
             List<ReviewDto> reviews = getAllReviewWithFilm(film_id);
-            fullFilmDto.setReviews(reviews);
+            List<FullReviewDto> fullreviews = new ArrayList<>();
+            for(ReviewDto reviewDto : reviews){
+                FullReviewDto fullReviewDto = reviewMapper.mapToFullDto(reviewDto);
+                fullReviewDto.setUser(userService.getUser(reviewDto.getIdUser()));
+                fullreviews.add(fullReviewDto);
+            }
+            fullFilmDto.setReviews(fullreviews);
 
             List<ScreenshotDto> screenshots = getAllScreenshotWithFilm(film_id);
             fullFilmDto.setScreenshots(screenshots);

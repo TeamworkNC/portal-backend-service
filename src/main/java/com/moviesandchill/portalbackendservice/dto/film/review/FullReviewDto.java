@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.dto.film.review;
 
+import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReviewDto {
+public class FullReviewDto {
 
     private Long idReview;
 
@@ -21,5 +22,5 @@ public class ReviewDto {
 
     private LocalDate reviewDate;
 
-    private Long idUser;
+    private UserDto user;
 }
