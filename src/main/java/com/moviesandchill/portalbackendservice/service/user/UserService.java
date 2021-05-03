@@ -10,8 +10,14 @@ import com.moviesandchill.portalbackendservice.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -80,6 +86,21 @@ public class UserService {
     public void updateUserPassword(long userId, UpdatePasswordDto updatePasswordDto) {
         String url = userServiceUrl + "/api/v1/users/" + userId + "/password";
         restTemplate.put(url, updatePasswordDto, Boolean.class);
+    }
+
+    public void updateUserLogo(long userId, MultipartFile file) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> body
+                = new LinkedMultiValueMap<>();
+        body.add("file", file.getResource());
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity
+                = new HttpEntity<>(body, headers);
+
+        String url = userServiceUrl + "/api/v1/users/" + userId + "/logo";
+        restTemplate.postForEntity(url, requestEntity, Void.class);
     }
 
     public UserDto login(LoginRequestDto loginRequestDto) {
