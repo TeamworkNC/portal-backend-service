@@ -8,7 +8,9 @@ import com.moviesandchill.portalbackendservice.dto.user.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
 import com.moviesandchill.portalbackendservice.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -65,6 +67,11 @@ public class UserController {
     @PutMapping("/{userId}/password")
     public void updateUserPassword(@PathVariable long userId, @RequestBody UpdatePasswordDto updatePasswordDto) {
         userService.updateUserPassword(userId, updatePasswordDto);
+    }
+
+    @PostMapping(path = "/{userId}/logo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateUserLogo(@PathVariable long userId, @RequestPart("file") MultipartFile file) {
+        userService.updateUserLogo(userId, file);
     }
 
     @PostMapping("/login")
