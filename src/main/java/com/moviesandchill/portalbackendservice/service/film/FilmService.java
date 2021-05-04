@@ -11,6 +11,7 @@ import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,8 @@ import java.util.Optional;
 public interface FilmService {
 
     List<FilmDto> getAllFilm();
+
+    List<FilmPageDto> searchFilm(String searchString);
 
     public List<FilmPageDto> getAllPageFilm();
 

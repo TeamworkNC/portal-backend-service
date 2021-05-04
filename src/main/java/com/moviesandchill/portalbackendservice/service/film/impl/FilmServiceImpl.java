@@ -20,7 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +56,15 @@ public class FilmServiceImpl implements FilmService {
     public List<FilmDto> getAllFilm() {
         String url = filmServiceUrl + "/films";
         Optional<FilmDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, FilmDto[].class);
+        return commonMapper.toList(listFilmDtoOptional);
+    }
+
+    @Override
+    public List<FilmPageDto> searchFilm(String searchString) {
+        String url = filmServiceUrl + "/es/search";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("search", searchString);
+        FilmPageDto[] listFilmDtoOptional =new RestTemplate().getForObject(builder.build().toUriString(), FilmPageDto[].class);
         return commonMapper.toList(listFilmDtoOptional);
     }
 
