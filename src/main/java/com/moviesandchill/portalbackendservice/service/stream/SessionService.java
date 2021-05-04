@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.service.stream;
 
+import com.moviesandchill.portalbackendservice.dto.stream.session.NewSessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionParDto;
 import com.moviesandchill.portalbackendservice.dto.stream.watcher.WatcherDto;
@@ -15,7 +16,7 @@ public interface SessionService {
 
     Optional<SessionDto> getSessionById(Long sessionID);
 
-    Optional<SessionDto> addSession(SessionDto sessionDto);
+    Optional<SessionDto> addSession(NewSessionDto newSessionDto);
 
     void deleteSessionById(Long sessionID);
 
@@ -23,5 +24,5 @@ public interface SessionService {
 
     List<WatcherDto> getAllWatcherWithSession(Long sessionID);
 
-    void addWatcherToSession(Long watcherID,Long sessionID) throws Exception;
+    void addWatcherToSession(Long watcherID, Long sessionID) throws Exception;
 }

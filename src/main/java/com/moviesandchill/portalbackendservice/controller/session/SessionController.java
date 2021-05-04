@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.controller.session;
 
+import com.moviesandchill.portalbackendservice.dto.stream.session.NewSessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionParDto;
 import com.moviesandchill.portalbackendservice.dto.stream.watcher.WatcherDto;
@@ -41,8 +42,8 @@ public class SessionController {
     }
 
     @PostMapping()
-    public ResponseEntity<SessionDto> addSession(@RequestBody SessionDto sessionDto) {
-        return commonMapper.toResponseEntity(sessionService.addSession(sessionDto));
+    public ResponseEntity<SessionDto> addSession(@RequestBody NewSessionDto newSessionDto) {
+        return commonMapper.toResponseEntity(sessionService.addSession(newSessionDto));
     }
 
     @DeleteMapping("/{sessionID}")

@@ -1,9 +1,13 @@
 package com.moviesandchill.portalbackendservice.service.stream.impl;
 
+import com.moviesandchill.portalbackendservice.dto.chat.chat.ChatDto;
+import com.moviesandchill.portalbackendservice.dto.chat.chat.NewChatDto;
+import com.moviesandchill.portalbackendservice.dto.stream.session.NewSessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionParDto;
 import com.moviesandchill.portalbackendservice.dto.stream.watcher.WatcherDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
+import com.moviesandchill.portalbackendservice.service.chat.ChatService;
 import com.moviesandchill.portalbackendservice.service.stream.SessionService;
 import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +25,11 @@ public class SessionServiceImpl implements SessionService {
 
     private String streamServiceUrl;
 
+    private final ChatService chatService;
     private final CommonMapper commonMapper;
 
-    public SessionServiceImpl(CommonMapper commonMapper) {
+    public SessionServiceImpl(ChatService chatService, CommonMapper commonMapper) {
+        this.chatService = chatService;
         this.commonMapper = commonMapper;
     }
 
@@ -47,7 +54,18 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Optional<SessionDto> addSession(SessionDto sessionDto) {
+    public Optional<SessionDto> addSession(NewSessionDto newSessionDto) {
+        NewChatDto newChatDto = new NewChatDto(""); //FIXME(anton) ?
+        ChatDto chat = chatService.addChat(newChatDto);
+        long chatId = chat.getChatId();
+
+        SessionDto sessionDto = SessionDto.builder()
+                .chatID(chatId)
+                .filmID(newSessionDto.getFilmID())
+                .organizerID(newSessionDto.getOrganizerID())
+                .stopTime(LocalTime.MIN)
+                .build();
+
         String url = streamServiceUrl + "/sessions";
         return RestTemplateUtils.post(url, sessionDto, SessionDto.class);
     }
