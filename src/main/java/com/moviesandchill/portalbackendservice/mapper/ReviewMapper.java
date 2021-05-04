@@ -1,6 +1,7 @@
 package com.moviesandchill.portalbackendservice.mapper;
 
 import com.moviesandchill.portalbackendservice.dto.film.review.FullReviewDto;
+import com.moviesandchill.portalbackendservice.dto.film.review.NewReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
@@ -15,4 +16,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface ReviewMapper {
 
     FullReviewDto mapToFullDto(ReviewDto dto);
+
+    ReviewDto mapNewToDto(NewReviewDto newReviewDto);
 }
