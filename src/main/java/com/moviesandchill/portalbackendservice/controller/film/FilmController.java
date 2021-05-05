@@ -69,7 +69,7 @@ public class FilmController {
     }
 
     @GetMapping("/full/{filmId}")
-    public ResponseEntity<FullFilmDto> getFullFilmById(Long filmId)  {
+    public ResponseEntity<FullFilmDto> getFullFilmById(@PathVariable Long filmId)  {
         return commonMapper.toResponseEntity(filmService.getFullFilmById(filmId));
     }
 
