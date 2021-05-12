@@ -9,7 +9,6 @@ import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
-import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;

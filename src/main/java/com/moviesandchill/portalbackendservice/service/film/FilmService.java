@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.service.film;
 
+import com.moviesandchill.portalbackendservice.dto.film.Filter;
 import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
 import com.moviesandchill.portalbackendservice.dto.film.country.CountryDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
@@ -20,7 +21,7 @@ public interface FilmService {
 
     List<FilmDto> getAllFilm();
 
-    List<FilmPageDto> searchFilm(String searchString);
+    List<FilmPageDto> searchFilm(String searchString, Filter filter);
 
     public List<FilmPageDto> getAllPageFilm();
 

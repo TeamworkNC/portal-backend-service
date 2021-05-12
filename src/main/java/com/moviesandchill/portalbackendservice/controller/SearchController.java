@@ -1,11 +1,9 @@
 package com.moviesandchill.portalbackendservice.controller;
 
+import com.moviesandchill.portalbackendservice.dto.film.Filter;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,8 +21,8 @@ public class SearchController {
         this.filmService = filmService;
     }
 
-    @GetMapping("/searchFilm")
-    public List<FilmPageDto> search(@RequestParam("search") String searchString) throws IOException {
-        return filmService.searchFilm(searchString);
+    @PostMapping("/searchFilm")
+    public List<FilmPageDto> search(@RequestParam("search") String searchString, @RequestBody Filter filter) throws IOException {
+        return filmService.searchFilm(searchString,filter);
     }
 }

@@ -61,8 +61,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1206-jdbc42</version>
-            <scope>runtime</scope>
+            <version>42.2.19.jre7</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>

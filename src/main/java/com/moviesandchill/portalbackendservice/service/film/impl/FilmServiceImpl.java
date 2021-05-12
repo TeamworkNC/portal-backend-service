@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.service.film.impl;
 
+import com.moviesandchill.portalbackendservice.dto.film.Filter;
 import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
 import com.moviesandchill.portalbackendservice.dto.film.country.CountryDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
@@ -61,11 +62,11 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<FilmPageDto> searchFilm(String searchString) {
+    public List<FilmPageDto> searchFilm(String searchString, Filter filter) {
         String url = filmServiceUrl + "/es/search";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("search", searchString);
-        FilmPageDto[] listFilmDtoOptional =new RestTemplate().getForObject(builder.build().toUriString(), FilmPageDto[].class);
+        FilmPageDto[] listFilmDtoOptional =new RestTemplate().postForObject(builder.build().toUriString(),filter, FilmPageDto[].class);
         return commonMapper.toList(listFilmDtoOptional);
     }
 
@@ -133,9 +134,11 @@ public class FilmServiceImpl implements FilmService {
             List<ReviewDto> reviews = getAllReviewWithFilm(film_id);
             List<FullReviewDto> fullreviews = new ArrayList<>();
             for(ReviewDto reviewDto : reviews){
-                FullReviewDto fullReviewDto = reviewMapper.mapToFullDto(reviewDto);
-                fullReviewDto.setUser(userService.getUser(reviewDto.getIdUser()));
-                fullreviews.add(fullReviewDto);
+                if(reviewDto.getIdUser() != null){
+                    FullReviewDto fullReviewDto = reviewMapper.mapToFullDto(reviewDto);
+                    fullReviewDto.setUser(userService.getUser(reviewDto.getIdUser()));
+                    fullreviews.add(fullReviewDto);
+                }
             }
             fullFilmDto.setReviews(fullreviews);
 
