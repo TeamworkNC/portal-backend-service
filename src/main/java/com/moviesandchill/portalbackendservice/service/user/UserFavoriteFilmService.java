@@ -37,6 +37,7 @@ public class UserFavoriteFilmService {
                     .orElseThrow();
             dtos.add(filmDto);
         }
+        System.out.println(dtos);
         return dtos;
     }
 
