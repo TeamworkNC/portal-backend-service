@@ -6,6 +6,7 @@ import com.moviesandchill.portalbackendservice.dto.film.country.CountryDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.RandFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.FullReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
@@ -80,9 +81,9 @@ public class FilmServiceImpl implements FilmService {
         return commonMapper.toList(listFilmDtoOptional);
     }
 
-    public List<FilmPageDto> getRandomThreeFilms() {
+    public List<RandFilmDto> getRandomThreeFilms() {
         String url = filmServiceUrl + "/films/randomthreefilms";
-        Optional<FilmPageDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, FilmPageDto[].class);
+        Optional<RandFilmDto[]> listFilmDtoOptional = RestTemplateUtils.get(url, RandFilmDto[].class);
         return commonMapper.toList(listFilmDtoOptional);
     }
 

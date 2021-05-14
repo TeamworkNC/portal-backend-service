@@ -6,6 +6,7 @@ import com.moviesandchill.portalbackendservice.dto.film.country.CountryDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.RandFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
@@ -27,7 +28,7 @@ public interface FilmService {
 
     public List<FilmPageDto> getFirstNewFilms();
 
-    public List<FilmPageDto> getRandomThreeFilms();
+    public List<RandFilmDto> getRandomThreeFilms();
 
     public List<FilmPageDto> getFirstPopularFilms();
 

@@ -3,6 +3,7 @@ package com.moviesandchill.portalbackendservice.controller.film;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.RandFilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
@@ -14,7 +15,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController()
 @RequestMapping(
@@ -47,7 +47,7 @@ public class FilmController {
     }
 
     @GetMapping("/randomthreefilms")
-    public List<FilmPageDto> getRandomThreeFilms() {
+    public List<RandFilmDto> getRandomThreeFilms() {
         return filmService.getRandomThreeFilms();
     }
 
