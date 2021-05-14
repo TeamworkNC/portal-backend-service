@@ -1,11 +1,13 @@
 package com.moviesandchill.portalbackendservice.service.user;
 
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.dto.user.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.FullUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.NewUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.UpdateUserDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
+import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +41,7 @@ public class UserService {
 
     private RestTemplate restTemplate;
     private UserMapper userMapper;
+    private CommonMapper commonMapper;
 
     public List<UserDto> getAllUsers() {
         String url = userServiceUrl + "/api/v1/users";
@@ -113,6 +117,14 @@ public class UserService {
         return restTemplate.postForObject(url, newUserDto, UserDto.class);
     }
 
+    public List<UserDto> search(String searchString) {
+        String url = userServiceUrl + "/es/search";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("search", searchString);
+        UserDto[] listUserDtoOptional =new RestTemplate().postForObject(builder.build().toUriString(),null, UserDto[].class);
+        return commonMapper.toList(listUserDtoOptional);
+    }
+
     @Autowired
     public void setUserServiceUrl(@Value("${endpoint.user-service.url}") String userServiceUrl) {
         this.userServiceUrl = userServiceUrl;
@@ -156,5 +168,10 @@ public class UserService {
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
+    }
+
+    @Autowired
+    public void setCommonMapper(CommonMapper commonMapper) {
+        this.commonMapper = commonMapper;
     }
 }
