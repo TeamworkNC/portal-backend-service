@@ -62,7 +62,12 @@ public class SessionController {
     }
 
     @PostMapping("/{sessionID}/addWatcher/{watcherID}")
-    public void addWatcherToSession(@PathVariable Long sessionID,@PathVariable Long watcherID) throws Exception {
-        sessionService.addWatcherToSession(watcherID,sessionID);
+    public void addWatcherToSession(@PathVariable Long sessionID, @PathVariable Long watcherID) throws Exception {
+        sessionService.addWatcherToSession(watcherID, sessionID);
+    }
+
+    @PostMapping("/{sessionID}/invite")
+    public void inviteFriendToSession(@PathVariable Long sessionID, @RequestBody Long friendID) {
+        sessionService.inviteFriendToSession(sessionID, friendID);
     }
 }

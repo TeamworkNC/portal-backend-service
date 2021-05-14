@@ -2,12 +2,14 @@ package com.moviesandchill.portalbackendservice.service.stream.impl;
 
 import com.moviesandchill.portalbackendservice.dto.chat.chat.ChatDto;
 import com.moviesandchill.portalbackendservice.dto.chat.chat.NewChatDto;
+import com.moviesandchill.portalbackendservice.dto.chat.notification.NewNotificationDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.NewSessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionParDto;
 import com.moviesandchill.portalbackendservice.dto.stream.watcher.WatcherDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.chat.ChatService;
+import com.moviesandchill.portalbackendservice.service.chat.NotificationService;
 import com.moviesandchill.portalbackendservice.service.stream.SessionService;
 import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +29,12 @@ public class SessionServiceImpl implements SessionService {
 
     private final ChatService chatService;
     private final CommonMapper commonMapper;
+    private final NotificationService notificationService;
 
-    public SessionServiceImpl(ChatService chatService, CommonMapper commonMapper) {
+    public SessionServiceImpl(ChatService chatService, CommonMapper commonMapper, NotificationService notificationService) {
         this.chatService = chatService;
         this.commonMapper = commonMapper;
+        this.notificationService = notificationService;
     }
 
 
@@ -93,6 +97,17 @@ public class SessionServiceImpl implements SessionService {
     public void addWatcherToSession(Long watcherID, Long sessionID) throws Exception {
         String url = streamServiceUrl + "/sessions/" + sessionID + "/watchers/" + watcherID;
         RestTemplateUtils.post(url, null);
+    }
+
+    @Override
+    public void inviteFriendToSession(Long sessionID, Long userID) {
+        var sessionDto = getSessionById(sessionID).orElseThrow();
+        var notification = NewNotificationDto.builder()
+                .text("hi! go to stream: https://mac21-ui.herokuapp.com/room/" + sessionDto.getSessionID())
+                .userId(userID)
+                .build();
+
+        notificationService.addNotification(notification);
     }
 
     @Autowired

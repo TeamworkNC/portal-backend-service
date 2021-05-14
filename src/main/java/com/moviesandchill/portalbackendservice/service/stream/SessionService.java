@@ -25,4 +25,6 @@ public interface SessionService {
     List<WatcherDto> getAllWatcherWithSession(Long sessionID);
 
     void addWatcherToSession(Long watcherID, Long sessionID) throws Exception;
+
+    void inviteFriendToSession(Long sessionID, Long userID);
 }
