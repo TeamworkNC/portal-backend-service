@@ -1,6 +1,7 @@
 package com.moviesandchill.portalbackendservice.dto.user.user;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.dto.user.achievement.AchievementDto;
 import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
@@ -34,7 +35,7 @@ public class FullUserDto {
 
     private List<AchievementDto> achievements;
 
-    private List<FilmDto> favoriteFilms;
+    private List<FilmPageDto> favoriteFilms;
 
     private List<FilmDto> wantWatchFilms;
 

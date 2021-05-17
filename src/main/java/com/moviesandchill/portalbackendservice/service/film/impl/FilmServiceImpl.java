@@ -106,6 +106,25 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    public FilmPageDto getFilmPageDtoById(Long film_id) {
+        String url = filmServiceUrl + "/films/" + film_id;
+        Optional<FilmDto> film =  RestTemplateUtils.get(url, null, FilmDto.class);
+        if(film.isPresent()){
+            FilmPageDto filmpage = new FilmPageDto();
+            filmpage.setId(film.get().getIdFilm());
+            filmpage.setLogo(film.get().getFilmPoster());
+            filmpage.setName(film.get().getFilmTitle());
+            filmpage.setRating(getRatingFilmById(film.get().getIdFilm()));
+            AgeLimitDto age = getAgeLimitByFilmId(film.get().getIdFilm()).orElse(null);
+            if(age != null){
+                filmpage.setAgeRestrictions(age.getTitle());
+            }
+            return filmpage;
+        }
+        return null;
+    }
+
+    @Override
     public Optional<FullFilmDto> getFullFilmById(Long film_id)  {
         Optional<FilmDto> film = getFilmById(film_id);
         if(film.isPresent()){

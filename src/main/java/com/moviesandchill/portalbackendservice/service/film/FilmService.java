@@ -36,6 +36,8 @@ public interface FilmService {
 
     Optional<FilmDto> getFilmById(Long film_id);
 
+    FilmPageDto getFilmPageDtoById(Long film_id);
+
     Optional<FullFilmDto> getFullFilmById(Long film_id);
 
     float getRatingFilmById(Long film_id);

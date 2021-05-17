@@ -1,6 +1,7 @@
 package com.moviesandchill.portalbackendservice.controller.user;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.service.user.UserFavoriteFilmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class UserFavoriteFilmController {
     }
 
     @GetMapping
-    List<FilmDto> getAllFavoriteFilms(@PathVariable long userId) {
+    List<FilmPageDto> getAllFavoriteFilms(@PathVariable long userId) {
         return userFavoriteFilmService.getAllFavoriteFilms(userId);
     }
 

@@ -2,6 +2,7 @@ package com.moviesandchill.portalbackendservice.service.user;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,17 +26,18 @@ public class UserFavoriteFilmService {
         this.restTemplate = restTemplate;
     }
 
-    public List<FilmDto> getAllFavoriteFilms(long userId) {
+    public List<FilmPageDto> getAllFavoriteFilms(long userId) {
         String url = userServiceUrl + "/api/v1/users/" + userId + "/favorite-films";
         var json = restTemplate.getForObject(url, ArrayNode.class);
-        List<FilmDto> dtos = new ArrayList<>();
+        List<FilmPageDto> dtos = new ArrayList<>();
 
         assert json != null;
         for (var obj : json) {
             long filmId = obj.get("filmId").asLong();
-            var filmDto = filmService.getFilmById(filmId)
-                    .orElseThrow();
-            dtos.add(filmDto);
+            var filmDto = filmService.getFilmPageDtoById(filmId);
+            if(filmDto != null){
+                dtos.add(filmDto);
+            }
         }
         System.out.println(dtos);
         return dtos;
