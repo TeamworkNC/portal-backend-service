@@ -38,7 +38,7 @@ public class FriendRequestService {
         long userId = newFriendRequestDto.getUserId();
         long recipientId = newFriendRequestDto.getRecipientId();
         var friendRequestDto = restTemplate.postForObject(url, newFriendRequestDto, FriendRequestDto.class);
-        notificationService.addNotification(new NewNotificationDto(recipientId, "user " + userId + "send friend request"));
+        notificationService.addNotification(new NewNotificationDto(recipientId, "user " + userId + " send friend request"));
         return friendRequestDto;
     }
 
