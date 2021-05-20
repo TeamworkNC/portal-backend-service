@@ -40,13 +40,13 @@ public class NotificationService {
     }
 
     public List<NotificationDto> getNotificationsByUserId(long userId) {
-        String url = chatServiceUrl + "/api/v1/notifications?userId=" + userId;
+        String url = chatServiceUrl + "/api/v1/notifications?user_id=" + userId;
         var dtos = restTemplate.getForObject(url, NotificationDto[].class);
         return Arrays.asList(Objects.requireNonNull(dtos));
     }
 
     public void deleteNotificationsByUserId(long userId) {
-        String url = chatServiceUrl + "/api/v1/notifications?userId=" + userId;
+        String url = chatServiceUrl + "/api/v1/notifications?user_id=" + userId;
         restTemplate.delete(url);
     }
 }
