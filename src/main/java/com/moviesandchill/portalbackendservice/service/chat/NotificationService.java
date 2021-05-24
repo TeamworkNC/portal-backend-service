@@ -49,4 +49,9 @@ public class NotificationService {
         String url = chatServiceUrl + "/api/v1/notifications?user_id=" + userId;
         restTemplate.delete(url);
     }
+
+    public void deleteNotification(long notificationId) {
+        String url = chatServiceUrl + "/api/v1/notifications/" + notificationId;
+        restTemplate.delete(url);
+    }
 }
