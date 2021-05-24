@@ -1,6 +1,7 @@
 package com.moviesandchill.portalbackendservice.controller.recommendation;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import com.moviesandchill.portalbackendservice.service.recommendation.RecommendationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class RecommendationController {
     }
 
     @GetMapping("/film")
-    public List<FilmDto> recommend(@RequestParam long userId) {
+    public List<FullFilmDto> recommend(@RequestParam long userId) {
         return recommendationService.recommend(userId);
     }
 }

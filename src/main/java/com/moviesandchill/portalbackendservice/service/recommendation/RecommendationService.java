@@ -1,6 +1,7 @@
 package com.moviesandchill.portalbackendservice.service.recommendation;
 
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
+import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,9 +22,9 @@ public class RecommendationService {
         this.restTemplate = restTemplate;
     }
 
-    public List<FilmDto> recommend(long userId) {
+    public List<FullFilmDto> recommend(long userId) {
         String url = baseUrl + "/api/v1/users/" + userId + "/recommendations";
-        FilmDto[] filmDtos = restTemplate.getForObject(url, FilmDto[].class);
+        FullFilmDto[] filmDtos = restTemplate.getForObject(url, FullFilmDto[].class);
         return Arrays.asList(Objects.requireNonNull(filmDtos));
     }
 }
