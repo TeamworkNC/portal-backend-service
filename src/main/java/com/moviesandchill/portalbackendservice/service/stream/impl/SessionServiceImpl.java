@@ -1,5 +1,7 @@
 package com.moviesandchill.portalbackendservice.service.stream.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moviesandchill.portalbackendservice.dto.chat.chat.ChatDto;
 import com.moviesandchill.portalbackendservice.dto.chat.chat.NewChatDto;
 import com.moviesandchill.portalbackendservice.dto.chat.notification.NewNotificationDto;
@@ -16,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -52,9 +57,9 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Optional<SessionDto> getSessionById(Long sessionID) {
+    public Optional<SessionParDto> getSessionById(Long sessionID) {
         String url = streamServiceUrl + "/sessions/" + sessionID;
-        return RestTemplateUtils.get(url, null, SessionDto.class);
+        return RestTemplateUtils.get(url, null, SessionParDto.class);
     }
 
     @Override
@@ -79,6 +84,13 @@ public class SessionServiceImpl implements SessionService {
         String url = streamServiceUrl + "/sessions/" + sessionID;
         RestTemplateUtils.delete(url);
     }
+
+    @Override
+    public void setSessionTimeAndState(Long sessionID,JsonNode jsonNode) throws Exception {
+        String url = streamServiceUrl + "/sessions/" + sessionID + "/setTimeAndState";
+        RestTemplateUtils.post(url, jsonNode);
+    }
+
 
     @Override
     public Optional<SessionDto> addSessionByParameters(SessionParDto sessionParDto) {
