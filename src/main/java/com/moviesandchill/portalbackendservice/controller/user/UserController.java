@@ -83,4 +83,14 @@ public class UserController {
     public UserDto register(@RequestBody NewUserDto newUserDto) {
         return userService.register(newUserDto);
     }
+
+    @PostMapping("/{userId}/ban")
+    public void ban(@PathVariable long userId) {
+        userService.ban(userId);
+    }
+
+    @PostMapping("/{userId}/unban")
+    public void unban(@PathVariable long userId) {
+        userService.unban(userId);
+    }
 }

@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.service.user;
 
-import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.user.login.LoginRequestDto;
 import com.moviesandchill.portalbackendservice.dto.user.password.UpdatePasswordDto;
 import com.moviesandchill.portalbackendservice.dto.user.user.FullUserDto;
@@ -117,11 +116,21 @@ public class UserService {
         return restTemplate.postForObject(url, newUserDto, UserDto.class);
     }
 
+    public void ban(long userId) {
+        String url = userServiceUrl + "/api/v1/users/" + userId + "/ban";
+        restTemplate.postForObject(url, null, Void.class);
+    }
+
+    public void unban(long userId) {
+        String url = userServiceUrl + "/api/v1/users/" + userId + "/unban";
+        restTemplate.postForObject(url, null, Void.class);
+    }
+
     public List<UserDto> search(String searchString) {
         String url = userServiceUrl + "/es/search";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("search", searchString);
-        UserDto[] listUserDtoOptional =new RestTemplate().postForObject(builder.build().toUriString(),null, UserDto[].class);
+        UserDto[] listUserDtoOptional = new RestTemplate().postForObject(builder.build().toUriString(), null, UserDto[].class);
         return commonMapper.toList(listUserDtoOptional);
     }
 
