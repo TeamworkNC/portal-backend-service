@@ -10,7 +10,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class NewNotificationDto {
-    private long userId;
+
+    private long recipientId;
+
+    private long senderId;
+
+    private String senderName;
 
     private String text;
+
+    private String pictureUrl;
+
+    private String type;
+
+    private String roomUrl;
+
+    private String filmTitle;
 }

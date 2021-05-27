@@ -5,6 +5,7 @@ import com.moviesandchill.portalbackendservice.dto.user.friendrequest.FriendRequ
 import com.moviesandchill.portalbackendservice.dto.user.friendrequest.NewFriendRequestDto;
 import com.moviesandchill.portalbackendservice.service.chat.NotificationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,15 +18,11 @@ import java.util.Objects;
 @Slf4j
 public class FriendRequestService {
 
-    private final String userServiceUrl;
-    private final RestTemplate restTemplate;
-    private final NotificationService notificationService;
+    private String userServiceUrl;
+    private RestTemplate restTemplate;
+    private NotificationService notificationService;
+    private UserService userService;
 
-    public FriendRequestService(@Value("${endpoint.user-service.url}") String userServiceUrl, RestTemplate restTemplate, NotificationService notificationService) {
-        this.userServiceUrl = userServiceUrl;
-        this.restTemplate = restTemplate;
-        this.notificationService = notificationService;
-    }
 
     public List<FriendRequestDto> getAllFriendRequests() {
         String url = userServiceUrl + "/api/v1/friend_requests";
@@ -35,15 +32,53 @@ public class FriendRequestService {
 
     public FriendRequestDto addFriendRequest(NewFriendRequestDto newFriendRequestDto) {
         String url = userServiceUrl + "/api/v1/friend_requests";
-        long userId = newFriendRequestDto.getUserId();
+        long senderId = newFriendRequestDto.getUserId();
         long recipientId = newFriendRequestDto.getRecipientId();
+
         var friendRequestDto = restTemplate.postForObject(url, newFriendRequestDto, FriendRequestDto.class);
-        notificationService.addNotification(new NewNotificationDto(recipientId, "user " + userId + " send friend request"));
+
+        sendFriendRequestNotification(senderId, recipientId);
+
         return friendRequestDto;
     }
+
+    private void sendFriendRequestNotification(long senderId, long recipientId) {
+        var sender = userService.getUser(senderId);
+        var notification = NewNotificationDto.builder()
+                .type("friend_request")
+                .recipientId(recipientId)
+                .senderId(senderId)
+                .senderName(sender.getLogin())
+                .pictureUrl(sender.getLogoUrl())
+                .text("пользователь " + sender.getLogin() + " хочет добавить вас в друзья")
+                .build();
+
+        notificationService.addNotification(notification);
+    }
+
 
     public void deleteAllFriendRequests() {
         String url = userServiceUrl + "/api/v1/friend_requests";
         restTemplate.delete(url);
+    }
+
+    @Autowired
+    public void setUserServiceUrl(@Value("${endpoint.user-service.url}") String userServiceUrl) {
+        this.userServiceUrl = userServiceUrl;
+    }
+
+    @Autowired
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    @Autowired
+    public void setNotificationService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

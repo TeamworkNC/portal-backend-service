@@ -10,7 +10,9 @@ import com.moviesandchill.portalbackendservice.dto.stream.watcher.WatcherDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.chat.ChatService;
 import com.moviesandchill.portalbackendservice.service.chat.NotificationService;
+import com.moviesandchill.portalbackendservice.service.film.FilmService;
 import com.moviesandchill.portalbackendservice.service.stream.SessionService;
+import com.moviesandchill.portalbackendservice.service.user.UserService;
 import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +29,11 @@ public class SessionServiceImpl implements SessionService {
 
     private String streamServiceUrl;
 
-    private final ChatService chatService;
-    private final CommonMapper commonMapper;
-    private final NotificationService notificationService;
-
-    public SessionServiceImpl(ChatService chatService, CommonMapper commonMapper, NotificationService notificationService) {
-        this.chatService = chatService;
-        this.commonMapper = commonMapper;
-        this.notificationService = notificationService;
-    }
-
+    private ChatService chatService;
+    private CommonMapper commonMapper;
+    private NotificationService notificationService;
+    private UserService userService;
+    private FilmService filmService;
 
     @Override
     public List<SessionDto> getAllSession() {
@@ -101,17 +98,54 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public void inviteFriendToSession(Long sessionID, Long userID) {
-        var sessionDto = getSessionById(sessionID).orElseThrow();
-        var notification = NewNotificationDto.builder()
-                .text("hi! go to stream: https://mac21-ui.herokuapp.com/room/" + sessionDto.getSessionID())
-                .userId(userID)
-                .build();
+        sendInviteNotification(sessionID, userID);
+    }
 
+    private void sendInviteNotification(Long sessionID, Long userID) {
+        var session = getSessionById(sessionID).orElseThrow();
+        var sender = userService.getUser(session.getOrganizerID());
+        var film = filmService.getFilmById(session.getFilmID()).orElseThrow();
+
+        var notification = NewNotificationDto.builder()
+                .type("stream_invite")
+                .recipientId(userID)
+                .senderId(sender.getUserId())
+                .senderName(sender.getLogin())
+                .pictureUrl(sender.getLogoUrl())
+                .roomUrl("https://mac21-ui.herokuapp.com/room/" + session.getSessionID())
+                .filmTitle(film.getFilmTitle())
+                .text("пользователь " + sender.getLogin() + " приглашает вас на просмотр фильма " + film.getFilmTitle())
+                .build();
         notificationService.addNotification(notification);
     }
 
     @Autowired
     public void setStreamServiceUrl(@Value("${endpoint.stream-service.url}") String streamServiceUrl) {
         this.streamServiceUrl = streamServiceUrl;
+    }
+
+    @Autowired
+    public void setChatService(ChatService chatService) {
+        this.chatService = chatService;
+    }
+
+    @Autowired
+    public void setCommonMapper(CommonMapper commonMapper) {
+        this.commonMapper = commonMapper;
+    }
+
+    @Autowired
+    public void setNotificationService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setFilmService(FilmService filmService) {
+        this.filmService = filmService;
     }
 }
