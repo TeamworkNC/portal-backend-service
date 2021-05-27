@@ -1,11 +1,13 @@
 package com.moviesandchill.portalbackendservice.controller.session;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.moviesandchill.portalbackendservice.dto.stream.session.NewSessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionParDto;
 import com.moviesandchill.portalbackendservice.dto.stream.watcher.WatcherDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.stream.SessionService;
+import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +39,7 @@ public class SessionController {
     }
 
     @GetMapping("/{sessionID}")
-    public ResponseEntity<SessionDto> getSessionById(@PathVariable Long sessionID) {
+    public ResponseEntity<SessionParDto> getSessionById(@PathVariable Long sessionID) {
         return commonMapper.toResponseEntity(sessionService.getSessionById(sessionID));
     }
 
@@ -49,6 +51,11 @@ public class SessionController {
     @DeleteMapping("/{sessionID}")
     public void deleteSessionById(@PathVariable Long sessionID) {
         sessionService.deleteSessionById(sessionID);
+    }
+
+    @PostMapping("/{sessionID}/setTimeAndState")
+    public void setSessionTimeAndState(@PathVariable Long sessionID,@RequestBody JsonNode jsonNode) throws Exception {
+        sessionService.setSessionTimeAndState(sessionID,jsonNode);
     }
 
     @PostMapping("/param")

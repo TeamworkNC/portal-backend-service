@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.service.stream;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.moviesandchill.portalbackendservice.dto.stream.session.NewSessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionDto;
 import com.moviesandchill.portalbackendservice.dto.stream.session.SessionParDto;
@@ -14,11 +15,13 @@ public interface SessionService {
 
     void deleteAllSession();
 
-    Optional<SessionDto> getSessionById(Long sessionID);
+    Optional<SessionParDto> getSessionById(Long sessionID);
 
     Optional<SessionDto> addSession(NewSessionDto newSessionDto);
 
     void deleteSessionById(Long sessionID);
+
+    void setSessionTimeAndState(Long sessionID, JsonNode jsonNode) throws Exception;
 
     Optional<SessionDto> addSessionByParameters(SessionParDto sessionParDto);
 
