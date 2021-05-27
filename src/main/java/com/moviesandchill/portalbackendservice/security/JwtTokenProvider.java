@@ -90,15 +90,6 @@ public class JwtTokenProvider {
                 .map(Cookie::getValue);
     }
 
-    public void setTokenToResponse(HttpServletResponse res, String token) {
-        Cookie cookie = new Cookie(cookieName, token);
-        cookie.setMaxAge(validityInMilliseconds);
-        cookie.setHttpOnly(false);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        res.addCookie(cookie);
-    }
-
     public boolean validateToken(String token) {
         try {
             var parser = Jwts.parserBuilder()
