@@ -10,11 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
 
@@ -75,19 +72,11 @@ public class JwtTokenProvider {
     }
 
     public Optional<String> getTokenFromRequest(HttpServletRequest req) {
-        System.out.println(req);
-        System.out.println(req.getHeaderNames());
-        var cookies = req.getCookies();
-        System.out.println(Arrays.toString(cookies));
-
-        if (cookies == null) {
-            return Optional.empty();
+        String bearerToken = req.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return Optional.of(bearerToken.substring(7));
         }
-
-        return Arrays.stream(cookies)
-                .filter(c -> c.getName().equals(cookieName))
-                .findFirst()
-                .map(Cookie::getValue);
+        return Optional.empty();
     }
 
     public boolean validateToken(String token) {
