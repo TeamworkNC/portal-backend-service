@@ -238,6 +238,22 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    public void addListGenreToFilm(Long filmId, List<Long> genres) throws Exception {
+        for(Long genreId : genres){
+            String url = filmServiceUrl + "/films/" + filmId + "/addGenre/" + genreId;
+            RestTemplateUtils.post(url, null);
+        }
+    }
+
+    @Override
+    public void addListStaffToFilm(Long filmId, List<Long> staffs) throws Exception {
+        for(Long staffId : staffs){
+            String url = filmServiceUrl + "/films/" + filmId + "/addStaff/" + staffId;
+            RestTemplateUtils.post(url, null);
+        }
+    }
+
+    @Override
     public List<StaffDto> getAllStaffWithFilm(Long film_id) {
         String url = filmServiceUrl + "/films/" + film_id + "/staffs";
         Optional<StaffDto[]> listStaffDtoOptional = RestTemplateUtils.get(url, StaffDto[].class);

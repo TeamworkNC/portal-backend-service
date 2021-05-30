@@ -11,6 +11,7 @@ import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
+import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,4 +71,8 @@ public interface FilmService {
     List<ScreenshotDto> getAllScreenshotWithFilm(Long film_id);
 
     void addScreenshotToFilm(Long film_id, Long screenshot_id) throws Exception;
+
+    void addListGenreToFilm(Long filmId, List<Long> genres) throws Exception;
+
+    void addListStaffToFilm(Long filmId, List<Long> staffs) throws Exception;
 }

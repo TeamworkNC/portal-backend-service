@@ -136,4 +136,14 @@ public class FilmController {
     public void addScreenshotToFilm(@PathVariable Long filmId, @PathVariable Long screenshotId) throws Exception {
         filmService.addScreenshotToFilm(filmId, screenshotId);
     }
+
+    @PostMapping("/{filmId}/addListGenre")
+    public void addListGenreToFilm(@PathVariable Long filmId,@RequestBody  List<Long> genres) throws Exception {
+        filmService.addListGenreToFilm(filmId,genres);
+    }
+
+    @PostMapping("/{filmId}/addListStaff")
+    public void addListStaffToFilm(@PathVariable Long filmId,@RequestBody  List<Long> staffs) throws Exception {
+        filmService.addListStaffToFilm(filmId,staffs);
+    }
 }
