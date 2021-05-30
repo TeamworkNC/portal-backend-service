@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientResponseException;
 
 @ControllerAdvice
@@ -20,9 +21,11 @@ public class ExceptionHandlerControllerAdvice {
 
     @SneakyThrows
     @ExceptionHandler(RestClientResponseException.class)
-    public ResponseEntity<ApiError> handleResourceNotFound(final RestClientResponseException exception) {
+    public ResponseEntity<ApiError> handleRestClientResponseException(final RestClientResponseException exception) {
         String body = exception.getResponseBodyAsString();
         int status = exception.getRawStatusCode();
+
+        log.info(body);
 
         try {
             var apiError = objectMapper.readValue(body, ApiError.class);
@@ -35,12 +38,31 @@ public class ExceptionHandlerControllerAdvice {
         }
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public @ResponseBody
-    ApiError handleException(final Exception exception) {
-        exception.printStackTrace();
-        return new ApiError(exception);
+    @SneakyThrows
+    @ExceptionHandler(HttpClientErrorException.class)
+    public ResponseEntity<ApiError> handleHttpClientErrorException(final HttpClientErrorException exception) {
+        String body = exception.getResponseBodyAsString();
+        int status = exception.getRawStatusCode();
+
+        log.info(body);
+
+        try {
+            var apiError = objectMapper.readValue(body, ApiError.class);
+            return new ResponseEntity<>(apiError, HttpStatus.valueOf(status));
+        } catch (Exception e) {
+            exception.printStackTrace();
+            String errorMessage = "received message from microservice with unknown response format: " + body;
+            var apiError = new ApiError(errorMessage);
+            return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+//    public @ResponseBody
+//    ApiError handleException(final Exception exception) {
+//        exception.printStackTrace();
+//        return new ApiError(exception);
+//    }
 
 }

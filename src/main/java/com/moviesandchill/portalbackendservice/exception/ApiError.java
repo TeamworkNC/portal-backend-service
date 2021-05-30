@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ApiError {
     private String message;
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private String dateTime = LocalDateTime.now().toString(); // HACK
 
     public ApiError(Exception exception) {
         message = exception.getMessage();
