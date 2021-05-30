@@ -40,8 +40,8 @@ public class ReviewController {
     }
 
     @PostMapping("/addToFilm/{filmId}")
-    public ResponseEntity<ReviewDto> addReview(@RequestBody NewReviewDto newReviewDto,@PathVariable Long filmId) {
-        return commonMapper.toResponseEntity(reviewService.addReview(newReviewDto,filmId));
+    public ResponseEntity<ReviewDto> addReview(@RequestBody NewReviewDto newReviewDto, @PathVariable Long filmId) {
+        return commonMapper.toResponseEntity(reviewService.addReview(newReviewDto, filmId));
     }
 
     @DeleteMapping("/{reviewId}")

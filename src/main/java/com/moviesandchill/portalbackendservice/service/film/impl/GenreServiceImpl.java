@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.service.film.impl;
 
-import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
 import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.GenreService;
@@ -55,7 +54,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Autowired
-    public void setFilmServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
+    public void setFilmServiceUrl(@Value("${endpoints.film-service-url}") String filmServiceUrl) {
         this.filmServiceUrl = filmServiceUrl;
     }
 }

@@ -20,7 +20,7 @@ public class UserWantWatchFilmService {
     private FilmService filmService;
     private final RestTemplate restTemplate;
 
-    public UserWantWatchFilmService(@Value("${endpoint.user-service.url}") String userServiceUrl, RestTemplate restTemplate) {
+    public UserWantWatchFilmService(@Value("${endpoints.user-service-url}") String userServiceUrl, RestTemplate restTemplate) {
         this.userServiceUrl = userServiceUrl;
         this.restTemplate = restTemplate;
     }

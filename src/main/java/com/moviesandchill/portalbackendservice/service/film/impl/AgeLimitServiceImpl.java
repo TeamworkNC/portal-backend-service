@@ -1,13 +1,11 @@
 package com.moviesandchill.portalbackendservice.service.film.impl;
 
 import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
-import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.AgeLimitService;
 import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,7 +54,7 @@ public class AgeLimitServiceImpl implements AgeLimitService {
     }
 
     @Autowired
-    public void setFilmServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
+    public void setFilmServiceUrl(@Value("${endpoints.film-service-url}") String filmServiceUrl) {
         this.filmServiceUrl = filmServiceUrl;
     }
 }

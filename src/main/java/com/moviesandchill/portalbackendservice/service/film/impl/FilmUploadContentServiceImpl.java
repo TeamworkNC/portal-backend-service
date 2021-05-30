@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.service.film.impl;
 
-import com.moviesandchill.portalbackendservice.service.film.FilmService;
 import com.moviesandchill.portalbackendservice.service.film.FilmUploadContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,7 +66,7 @@ public class FilmUploadContentServiceImpl implements FilmUploadContentService {
     }
 
     @Autowired
-    public void setFilmServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
+    public void setFilmServiceUrl(@Value("${endpoints.film-service-url}") String filmServiceUrl) {
         this.filmServiceUrl = filmServiceUrl;
     }
 }

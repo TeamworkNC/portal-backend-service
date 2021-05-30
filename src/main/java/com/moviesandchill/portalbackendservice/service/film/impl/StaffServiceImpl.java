@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.service.film.impl;
 
-import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.StaffService;
@@ -26,21 +25,21 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public List<StaffDto> getAllStaff() {
         String url = filmServiceUrl + "/staffs";
-        Optional<StaffDto[]> listStaffDtoOptional = RestTemplateUtils.get(url,StaffDto[].class);
+        Optional<StaffDto[]> listStaffDtoOptional = RestTemplateUtils.get(url, StaffDto[].class);
         return commonMapper.toList(listStaffDtoOptional);
     }
 
     @Override
     public List<StaffDto> getAllActorsStaff() {
         String url = filmServiceUrl + "/staffs/actors";
-        Optional<StaffDto[]> listStaffDtoOptional = RestTemplateUtils.get(url,StaffDto[].class);
+        Optional<StaffDto[]> listStaffDtoOptional = RestTemplateUtils.get(url, StaffDto[].class);
         return commonMapper.toList(listStaffDtoOptional);
     }
 
     @Override
     public List<StaffDto> getAllProducersStaff() {
         String url = filmServiceUrl + "/staffs/producerss";
-        Optional<StaffDto[]> listStaffDtoOptional = RestTemplateUtils.get(url,StaffDto[].class);
+        Optional<StaffDto[]> listStaffDtoOptional = RestTemplateUtils.get(url, StaffDto[].class);
         return commonMapper.toList(listStaffDtoOptional);
     }
 
@@ -69,7 +68,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Autowired
-    public void setFilmServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
+    public void setFilmServiceUrl(@Value("${endpoints.film-service-url}") String filmServiceUrl) {
         this.filmServiceUrl = filmServiceUrl;
     }
 }

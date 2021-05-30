@@ -18,7 +18,7 @@ public class NotificationService {
     private final String chatServiceUrl;
     private final RestTemplate restTemplate;
 
-    public NotificationService(@Value("${endpoint.chat-service.url}") String chatServiceUrl, RestTemplate restTemplate) {
+    public NotificationService(@Value("${endpoints.chat-service-url}") String chatServiceUrl, RestTemplate restTemplate) {
         this.chatServiceUrl = chatServiceUrl;
         this.restTemplate = restTemplate;
     }

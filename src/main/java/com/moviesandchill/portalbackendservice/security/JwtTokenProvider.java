@@ -20,7 +20,7 @@ import java.util.Optional;
 @Slf4j
 public class JwtTokenProvider {
 
-    @Value("${jwt.token.cookie_name}")
+    @Value("${jwt.token.cookie-name}")
     private String cookieName;
 
     @Value("${jwt.token.secret}")
@@ -31,7 +31,6 @@ public class JwtTokenProvider {
 
     @PostConstruct
     private void postConstruct() {
-        log.info("postConstruct");
         log.info(cookieName);
         log.info(secret);
         log.info(String.valueOf(validityInMilliseconds));

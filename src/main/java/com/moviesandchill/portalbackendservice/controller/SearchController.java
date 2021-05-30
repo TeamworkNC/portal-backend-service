@@ -27,7 +27,7 @@ public class SearchController {
 
     @PostMapping("/searchFilm")
     public List<FilmPageDto> search(@RequestParam("search") String searchString, @RequestBody Filter filter) throws IOException {
-        return filmService.searchFilm(searchString,filter);
+        return filmService.searchFilm(searchString, filter);
     }
 
     @PostMapping("/searchUser")

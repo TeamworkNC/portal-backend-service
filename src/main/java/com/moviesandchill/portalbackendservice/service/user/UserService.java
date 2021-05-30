@@ -135,7 +135,7 @@ public class UserService {
     }
 
     @Autowired
-    public void setUserServiceUrl(@Value("${endpoint.user-service.url}") String userServiceUrl) {
+    public void setUserServiceUrl(@Value("${endpoints.user-service-url}") String userServiceUrl) {
         this.userServiceUrl = userServiceUrl;
     }
 

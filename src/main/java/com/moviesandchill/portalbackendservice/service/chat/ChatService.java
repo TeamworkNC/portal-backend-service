@@ -17,7 +17,7 @@ public class ChatService {
     private final String chatServiceUrl;
     private final RestTemplate restTemplate;
 
-    public ChatService(@Value("${endpoint.chat-service.url}") String chatServiceUrl, RestTemplate restTemplate) {
+    public ChatService(@Value("${endpoints.chat-service-url}") String chatServiceUrl, RestTemplate restTemplate) {
         this.chatServiceUrl = chatServiceUrl;
         this.restTemplate = restTemplate;
     }

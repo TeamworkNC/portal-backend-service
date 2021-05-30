@@ -1,7 +1,6 @@
 package com.moviesandchill.portalbackendservice.service.stream.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moviesandchill.portalbackendservice.dto.chat.chat.ChatDto;
 import com.moviesandchill.portalbackendservice.dto.chat.chat.NewChatDto;
 import com.moviesandchill.portalbackendservice.dto.chat.notification.NewNotificationDto;
@@ -20,9 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -83,7 +79,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void setSessionTimeAndState(Long sessionID,JsonNode jsonNode) throws Exception {
+    public void setSessionTimeAndState(Long sessionID, JsonNode jsonNode) throws Exception {
         String url = streamServiceUrl + "/sessions/" + sessionID + "/setTimeAndState";
         RestTemplateUtils.post(url, jsonNode);
     }
@@ -132,7 +128,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Autowired
-    public void setStreamServiceUrl(@Value("${endpoint.stream-service.url}") String streamServiceUrl) {
+    public void setStreamServiceUrl(@Value("${endpoints.stream-service-url}") String streamServiceUrl) {
         this.streamServiceUrl = streamServiceUrl;
     }
 

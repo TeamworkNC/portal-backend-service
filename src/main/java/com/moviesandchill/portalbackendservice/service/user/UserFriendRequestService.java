@@ -17,7 +17,7 @@ public class UserFriendRequestService {
     private final String userServiceUrl;
     private final RestTemplate restTemplate;
 
-    public UserFriendRequestService(@Value("${endpoint.user-service.url}") String userServiceUrl, RestTemplate restTemplate) {
+    public UserFriendRequestService(@Value("${endpoints.user-service-url}") String userServiceUrl, RestTemplate restTemplate) {
         this.userServiceUrl = userServiceUrl;
         this.restTemplate = restTemplate;
     }

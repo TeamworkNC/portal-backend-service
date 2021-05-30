@@ -16,7 +16,7 @@ public class UserFavoriteStaffService {
     private final FilmService filmService;
     private final RestTemplate restTemplate;
 
-    public UserFavoriteStaffService(@Value("${endpoint.user-service.url}") String userServiceUrl, FilmService filmService, RestTemplate restTemplate) {
+    public UserFavoriteStaffService(@Value("${endpoints.user-service-url}") String userServiceUrl, FilmService filmService, RestTemplate restTemplate) {
         this.userServiceUrl = userServiceUrl;
         this.filmService = filmService;
         this.restTemplate = restTemplate;

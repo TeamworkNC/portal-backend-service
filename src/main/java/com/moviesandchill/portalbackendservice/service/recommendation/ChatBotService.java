@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class ChatBotService {
-    @Value("${endpoint.recommendation-service.url}")
+    @Value("${endpoints.recommendation-service-url}")
     private String recommendationServiceUrl;
 
     private final RestTemplate restTemplate;

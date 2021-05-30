@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.controller.recommendation;
 
-import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import com.moviesandchill.portalbackendservice.service.recommendation.RecommendationService;
 import lombok.extern.slf4j.Slf4j;

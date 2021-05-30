@@ -22,6 +22,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" />
+          <factory-entry name="portal-backend-service" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
@@ -135,7 +136,7 @@
     <orderEntry type="library" name="Maven: org.springframework.session:spring-session-core:2.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-configuration-processor:2.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-configuration-processor:2.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-devtools:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.4.0" level="project" />

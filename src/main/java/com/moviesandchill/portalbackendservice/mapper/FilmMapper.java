@@ -1,8 +1,6 @@
 package com.moviesandchill.portalbackendservice.mapper;
 
-import com.moviesandchill.portalbackendservice.dto.film.agelimit.AgeLimitDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
-import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;

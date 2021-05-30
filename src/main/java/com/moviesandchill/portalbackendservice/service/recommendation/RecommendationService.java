@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.service.recommendation;
 
-import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,7 @@ import java.util.Objects;
 @Service
 public class RecommendationService {
 
-    @Value("${endpoint.recommendation-service.url}")
+    @Value("${endpoints.recommendation-service-url}")
     private String baseUrl;
 
     private final RestTemplate restTemplate;

@@ -7,7 +7,6 @@ import com.moviesandchill.portalbackendservice.dto.stream.session.SessionParDto;
 import com.moviesandchill.portalbackendservice.dto.stream.watcher.WatcherDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.stream.SessionService;
-import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,8 +53,8 @@ public class SessionController {
     }
 
     @PostMapping("/{sessionID}/setTimeAndState")
-    public void setSessionTimeAndState(@PathVariable Long sessionID,@RequestBody JsonNode jsonNode) throws Exception {
-        sessionService.setSessionTimeAndState(sessionID,jsonNode);
+    public void setSessionTimeAndState(@PathVariable Long sessionID, @RequestBody JsonNode jsonNode) throws Exception {
+        sessionService.setSessionTimeAndState(sessionID, jsonNode);
     }
 
     @PostMapping("/param")

@@ -1,6 +1,5 @@
 package com.moviesandchill.portalbackendservice.service.film.impl;
 
-import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.NewReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
@@ -50,12 +49,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Optional<ReviewDto> addReview(NewReviewDto reviewDto,Long filmId) {
+    public Optional<ReviewDto> addReview(NewReviewDto reviewDto, Long filmId) {
         String url = filmServiceUrl + "/reviews";
         Optional<ReviewDto> review = RestTemplateUtils.post(url, reviewMapper.mapNewToDto(reviewDto), ReviewDto.class);
-        if(review.isPresent()){
-            String urlAddReview = filmServiceUrl + "/films/" + filmId +"/addReview/" + review.get().getIdReview();
-            new RestTemplate().exchange(urlAddReview, HttpMethod.POST,null,void.class);
+        if (review.isPresent()) {
+            String urlAddReview = filmServiceUrl + "/films/" + filmId + "/addReview/" + review.get().getIdReview();
+            new RestTemplate().exchange(urlAddReview, HttpMethod.POST, null, void.class);
         }
         return review;
     }
@@ -67,7 +66,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Autowired
-    public void setFilmServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
+    public void setFilmServiceUrl(@Value("${endpoints.film-service-url}") String filmServiceUrl) {
         this.filmServiceUrl = filmServiceUrl;
     }
 }

@@ -74,8 +74,8 @@ public class FilmController {
 
     @PostMapping
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<FilmDto> addFilm(@RequestBody FilmDto film_dto) {
-        return commonMapper.toResponseEntity(filmService.addFilm(film_dto));
+    public ResponseEntity<FilmDto> addFilm(@RequestBody FilmDto filmDto) {
+        return commonMapper.toResponseEntity(filmService.addFilm(filmDto));
     }
 
     @DeleteMapping("/{filmId}")

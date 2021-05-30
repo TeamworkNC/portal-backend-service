@@ -1,7 +1,6 @@
 package com.moviesandchill.portalbackendservice.service.user;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ public class UserFavoriteFilmService {
     private final FilmService filmService;
     private final RestTemplate restTemplate;
 
-    public UserFavoriteFilmService(@Value("${endpoint.user-service.url}") String userServiceUrl, FilmService filmService, RestTemplate restTemplate) {
+    public UserFavoriteFilmService(@Value("${endpoints.user-service-url}") String userServiceUrl, FilmService filmService, RestTemplate restTemplate) {
         this.userServiceUrl = userServiceUrl;
         this.filmService = filmService;
         this.restTemplate = restTemplate;
@@ -35,11 +34,10 @@ public class UserFavoriteFilmService {
         for (var obj : json) {
             long filmId = obj.get("filmId").asLong();
             var filmDto = filmService.getFilmPageDtoById(filmId);
-            if(filmDto != null){
+            if (filmDto != null) {
                 dtos.add(filmDto);
             }
         }
-        System.out.println(dtos);
         return dtos;
     }
 

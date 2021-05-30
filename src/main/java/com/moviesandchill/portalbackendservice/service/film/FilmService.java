@@ -11,10 +11,7 @@ import com.moviesandchill.portalbackendservice.dto.film.genre.GenreDto;
 import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto;
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,13 +21,13 @@ public interface FilmService {
 
     List<FilmPageDto> searchFilm(String searchString, Filter filter);
 
-    public List<FilmPageDto> getAllPageFilm();
+    List<FilmPageDto> getAllPageFilm();
 
-    public List<FilmPageDto> getFirstNewFilms();
+    List<FilmPageDto> getFirstNewFilms();
 
-    public List<RandFilmDto> getRandomThreeFilms();
+    List<RandFilmDto> getRandomThreeFilms();
 
-    public List<FilmPageDto> getFirstPopularFilms();
+    List<FilmPageDto> getFirstPopularFilms();
 
     void deleteAllFilm();
 
@@ -42,17 +39,17 @@ public interface FilmService {
 
     float getRatingFilmById(Long film_id);
 
-    List<StaffDto> getAllActorsByFilm(Long film_id) ;
+    List<StaffDto> getAllActorsByFilm(Long film_id);
 
-    List<StaffDto> getAllProducersByFilm(Long film_id) ;
+    List<StaffDto> getAllProducersByFilm(Long film_id);
 
     Optional<AgeLimitDto> getAgeLimitByFilmId(Long film_id);
 
-    void setAgeLimitByFilmId(Long film_id,Long ageLimitID) throws Exception;
+    void setAgeLimitByFilmId(Long film_id, Long ageLimitID) throws Exception;
 
     Optional<CountryDto> getCountryByFilmId(Long film_id);
 
-    void setCountryByFilmId(Long film_id,Long countryID) throws Exception;
+    void setCountryByFilmId(Long film_id, Long countryID) throws Exception;
 
     Optional<FilmDto> addFilm(FilmDto film_dto);
 
@@ -60,17 +57,17 @@ public interface FilmService {
 
     List<GenreDto> getAllGenreWithFilm(Long film_id);
 
-    void addGenreToFilm(Long film_id,Long genre_id) throws Exception;
+    void addGenreToFilm(Long film_id, Long genre_id) throws Exception;
 
     List<StaffDto> getAllStaffWithFilm(Long film_id);
 
-    void addStaffToFilm(Long film_id,Long staff_id) throws Exception;
+    void addStaffToFilm(Long film_id, Long staff_id) throws Exception;
 
     List<ReviewDto> getAllReviewWithFilm(Long film_id);
 
-    void addReviewToFilm(Long film_id,Long review_id) throws Exception;
+    void addReviewToFilm(Long film_id, Long review_id) throws Exception;
 
     List<ScreenshotDto> getAllScreenshotWithFilm(Long film_id);
 
-    void addScreenshotToFilm(Long film_id,Long screenshot_id) throws Exception;
+    void addScreenshotToFilm(Long film_id, Long screenshot_id) throws Exception;
 }

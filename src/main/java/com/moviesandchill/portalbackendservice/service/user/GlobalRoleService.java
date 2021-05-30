@@ -3,7 +3,6 @@ package com.moviesandchill.portalbackendservice.service.user;
 import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
 import com.moviesandchill.portalbackendservice.dto.user.globalrole.NewGlobalRoleDto;
 import com.moviesandchill.portalbackendservice.dto.user.globalrole.UpdateGlobalRoleDto;
-import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class GlobalRoleService {
     private final String userServiceUrl;
     private final RestTemplate restTemplate;
 
-    public GlobalRoleService(@Value("${endpoint.user-service.url}") String userServiceUrl, RestTemplate restTemplate) {
+    public GlobalRoleService(@Value("${endpoints.user-service-url}") String userServiceUrl, RestTemplate restTemplate) {
         this.userServiceUrl = userServiceUrl;
         this.restTemplate = restTemplate;
     }

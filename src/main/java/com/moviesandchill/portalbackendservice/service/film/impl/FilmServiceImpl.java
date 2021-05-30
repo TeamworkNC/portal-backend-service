@@ -45,7 +45,7 @@ public class FilmServiceImpl implements FilmService {
     private final ReviewMapper reviewMapper;
 
     @Autowired
-    public FilmServiceImpl(CommonMapper commonMapper,FilmMapper filmMapper,ReviewMapper reviewMapper) {
+    public FilmServiceImpl(CommonMapper commonMapper, FilmMapper filmMapper, ReviewMapper reviewMapper) {
         this.commonMapper = commonMapper;
         this.filmMapper = filmMapper;
         this.reviewMapper = reviewMapper;
@@ -64,7 +64,7 @@ public class FilmServiceImpl implements FilmService {
         String url = filmServiceUrl + "/es/search";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("search", searchString);
-        FilmPageDto[] listFilmDtoOptional =new RestTemplate().postForObject(builder.build().toUriString(),filter, FilmPageDto[].class);
+        FilmPageDto[] listFilmDtoOptional = new RestTemplate().postForObject(builder.build().toUriString(), filter, FilmPageDto[].class);
         return commonMapper.toList(listFilmDtoOptional);
     }
 
@@ -108,15 +108,15 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public FilmPageDto getFilmPageDtoById(Long film_id) {
         String url = filmServiceUrl + "/films/" + film_id;
-        Optional<FilmDto> film =  RestTemplateUtils.get(url, null, FilmDto.class);
-        if(film.isPresent()){
+        Optional<FilmDto> film = RestTemplateUtils.get(url, null, FilmDto.class);
+        if (film.isPresent()) {
             FilmPageDto filmpage = new FilmPageDto();
             filmpage.setId(film.get().getIdFilm());
             filmpage.setLogo(film.get().getFilmPoster());
             filmpage.setName(film.get().getFilmTitle());
             filmpage.setRating(getRatingFilmById(film.get().getIdFilm()));
             AgeLimitDto age = getAgeLimitByFilmId(film.get().getIdFilm()).orElse(null);
-            if(age != null){
+            if (age != null) {
                 filmpage.setAgeRestrictions(age.getTitle());
             }
             return filmpage;
@@ -125,9 +125,9 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Optional<FullFilmDto> getFullFilmById(Long film_id)  {
+    public Optional<FullFilmDto> getFullFilmById(Long film_id) {
         Optional<FilmDto> film = getFilmById(film_id);
-        if(film.isPresent()){
+        if (film.isPresent()) {
             FullFilmDto fullFilmDto = filmMapper.dtoToFullFilm(film.get());
 
             float rating = getRatingFilmById(film_id);
@@ -150,8 +150,8 @@ public class FilmServiceImpl implements FilmService {
 
             List<ReviewDto> reviews = getAllReviewWithFilm(film_id);
             List<FullReviewDto> fullreviews = new ArrayList<>();
-            for(ReviewDto reviewDto : reviews){
-                if(reviewDto.getIdUser() != null){
+            for (ReviewDto reviewDto : reviews) {
+                if (reviewDto.getIdUser() != null) {
                     FullReviewDto fullReviewDto = reviewMapper.mapToFullDto(reviewDto);
                     fullReviewDto.setUser(userService.getUser(reviewDto.getIdUser()));
                     fullreviews.add(fullReviewDto);
@@ -166,7 +166,6 @@ public class FilmServiceImpl implements FilmService {
         }
         return null;
     }
-
 
 
     @Override
@@ -278,7 +277,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Autowired
-    public void setFilmServiceUrl(@Value("${endpoint.film-service.url}") String filmServiceUrl) {
+    public void setFilmServiceUrl(@Value("${endpoints.film-service-url}") String filmServiceUrl) {
         this.filmServiceUrl = filmServiceUrl;
     }
 
