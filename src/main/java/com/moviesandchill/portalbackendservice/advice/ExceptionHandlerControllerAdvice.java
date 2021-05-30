@@ -57,12 +57,12 @@ public class ExceptionHandlerControllerAdvice {
         }
     }
 
-//    @ExceptionHandler(Exception.class)
-//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-//    public @ResponseBody
-//    ApiError handleException(final Exception exception) {
-//        exception.printStackTrace();
-//        return new ApiError(exception);
-//    }
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public @ResponseBody
+    ApiError handleException(final Exception exception) {
+        exception.printStackTrace();
+        return new ApiError(exception);
+    }
 
 }
