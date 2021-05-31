@@ -3,6 +3,7 @@ package com.moviesandchill.portalbackendservice.controller.chat;
 import com.moviesandchill.portalbackendservice.dto.chat.message.MessageDto;
 import com.moviesandchill.portalbackendservice.dto.chat.message.NewMessageDto;
 import com.moviesandchill.portalbackendservice.service.chat.MessageService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,11 +26,13 @@ public class MessageController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     MessageDto addMessage(@RequestBody NewMessageDto newMessageDto) {
         return messageService.addMessage(newMessageDto);
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     void deleteAllMessages() {
         messageService.deleteAllMessages();
     }
@@ -40,6 +43,7 @@ public class MessageController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_USER")
     private void deleteMessageById(@PathVariable("id") long messageId) {
         messageService.deleteMessageById(messageId);
     }

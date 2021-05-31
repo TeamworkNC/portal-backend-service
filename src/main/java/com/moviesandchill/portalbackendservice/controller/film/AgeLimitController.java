@@ -30,7 +30,7 @@ public class AgeLimitController {
     }
 
     @DeleteMapping
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void deleteAllAgeLimit() {
         ageLimitService.deleteAllAgeLimit();
     }
@@ -41,12 +41,13 @@ public class AgeLimitController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     public ResponseEntity<AgeLimitDto> addAgeLimit(@RequestBody AgeLimitDto ageLimitDto) {
         return commonMapper.toResponseEntity(ageLimitService.addAgeLimit(ageLimitDto));
     }
 
     @DeleteMapping("/{ageLimitId}")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void deleteAgeLimitById(@PathVariable Long ageLimitId) {
         ageLimitService.deleteAgeLimitById(ageLimitId);
     }

@@ -30,7 +30,7 @@ public class GenreController {
     }
 
     @DeleteMapping
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void deleteAllGenre() {
         genreService.deleteAllGenre();
     }
@@ -41,12 +41,13 @@ public class GenreController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     public ResponseEntity<GenreDto> addGenre(@RequestBody GenreDto genreDto) {
         return commonMapper.toResponseEntity(genreService.addGenre(genreDto));
     }
 
     @DeleteMapping("/{genreId}")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void deleteGenreById(@PathVariable Long genreId) {
         genreService.deleteGenreById(genreId);
     }

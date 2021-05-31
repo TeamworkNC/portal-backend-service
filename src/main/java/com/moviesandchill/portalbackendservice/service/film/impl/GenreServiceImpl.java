@@ -14,9 +14,8 @@ import java.util.Optional;
 @Service
 public class GenreServiceImpl implements GenreService {
 
-    private String filmServiceUrl;
-
     private final CommonMapper commonMapper;
+    private String filmServiceUrl;
 
     public GenreServiceImpl(CommonMapper commonMapper) {
         this.commonMapper = commonMapper;

@@ -4,6 +4,7 @@ import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.StaffService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class StaffController {
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     public void deleteAllStaff() {
         staffService.deleteAllStaff();
     }
@@ -49,11 +51,13 @@ public class StaffController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     public ResponseEntity<StaffDto> addStaff(@RequestBody StaffDto staffDto) {
         return commonMapper.toResponseEntity(staffService.addStaff(staffDto));
     }
 
     @DeleteMapping("/{staffId}")
+    @Secured("ROLE_USER")
     public void deleteStaffById(@PathVariable Long staffId) {
         staffService.deleteStaffById(staffId);
     }

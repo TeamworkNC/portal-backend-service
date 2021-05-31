@@ -3,6 +3,7 @@ package com.moviesandchill.portalbackendservice.controller.user;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.service.user.UserWatchedFilmService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,16 +27,19 @@ public class UserWatchedFilmController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     public void addWatchedFilm(@PathVariable long userId, @RequestBody long filmId) {
         userWatchedFilmService.addWatchedFilm(userId, filmId);
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     public void deleteAllWatchedFilms(@PathVariable long userId) {
         userWatchedFilmService.deleteAllWatchedFilms(userId);
     }
 
     @DeleteMapping("/{filmId}")
+    @Secured("ROLE_USER")
     public void deleteWatchedFilm(@PathVariable long userId, @PathVariable long filmId) {
         userWatchedFilmService.deleteWatchedFilm(userId, filmId);
     }

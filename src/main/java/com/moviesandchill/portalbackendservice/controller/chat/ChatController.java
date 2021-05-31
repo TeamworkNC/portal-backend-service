@@ -6,6 +6,7 @@ import com.moviesandchill.portalbackendservice.dto.chat.message.MessageDto;
 import com.moviesandchill.portalbackendservice.service.chat.ChatService;
 import com.moviesandchill.portalbackendservice.service.chat.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,11 +27,13 @@ public class ChatController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     public ChatDto addChat(@RequestBody NewChatDto newChatDto) {
         return chatService.addChat(newChatDto);
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     public void deleteAllChats() {
         chatService.deleteAllChats();
     }
@@ -41,6 +44,7 @@ public class ChatController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_USER")
     public void deleteChatById(@PathVariable("id") long chatId) {
         chatService.deleteChatById(chatId);
     }
@@ -51,6 +55,7 @@ public class ChatController {
     }
 
     @DeleteMapping("/{id}/messages")
+    @Secured("ROLE_USER")
     void deleteAllMessagesByChatId(@PathVariable("id") long chatId) {
         messageService.deleteAllMessagesByChatId(chatId);
     }

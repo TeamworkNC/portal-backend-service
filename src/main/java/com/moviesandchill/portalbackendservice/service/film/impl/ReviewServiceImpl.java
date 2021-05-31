@@ -18,11 +18,9 @@ import java.util.Optional;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
-    private String filmServiceUrl;
-
     private final CommonMapper commonMapper;
-
     private final ReviewMapper reviewMapper;
+    private String filmServiceUrl;
 
     public ReviewServiceImpl(CommonMapper commonMapper, ReviewMapper reviewMapper) {
         this.commonMapper = commonMapper;

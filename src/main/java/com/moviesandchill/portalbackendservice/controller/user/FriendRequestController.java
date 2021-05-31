@@ -4,6 +4,7 @@ import com.moviesandchill.portalbackendservice.dto.user.friendrequest.FriendRequ
 import com.moviesandchill.portalbackendservice.dto.user.friendrequest.NewFriendRequestDto;
 import com.moviesandchill.portalbackendservice.service.user.FriendRequestService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,11 +28,13 @@ public class FriendRequestController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     FriendRequestDto addFriendRequest(@RequestBody NewFriendRequestDto newFriendRequestDto) {
         return friendRequestService.addFriendRequest(newFriendRequestDto);
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     void deleteAllFriendRequests() {
         friendRequestService.deleteAllFriendRequests();
     }

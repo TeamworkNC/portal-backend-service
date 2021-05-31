@@ -5,6 +5,7 @@ import com.moviesandchill.portalbackendservice.dto.film.review.ReviewDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.ReviewService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class ReviewController {
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     public void deleteAllReview() {
         reviewService.deleteAllReview();
     }
@@ -40,11 +42,13 @@ public class ReviewController {
     }
 
     @PostMapping("/addToFilm/{filmId}")
+    @Secured("ROLE_USER")
     public ResponseEntity<ReviewDto> addReview(@RequestBody NewReviewDto newReviewDto, @PathVariable Long filmId) {
         return commonMapper.toResponseEntity(reviewService.addReview(newReviewDto, filmId));
     }
 
     @DeleteMapping("/{reviewId}")
+    @Secured("ROLE_USER")
     public void deleteReviewById(@PathVariable Long reviewId) {
         reviewService.deleteReviewById(reviewId);
     }

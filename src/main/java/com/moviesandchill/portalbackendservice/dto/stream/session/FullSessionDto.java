@@ -21,5 +21,5 @@ public class FullSessionDto {
 
     private StateDto state;
 
-    private List<WatcherDto> watchers = new ArrayList<>();
+    private final List<WatcherDto> watchers = new ArrayList<>();
 }

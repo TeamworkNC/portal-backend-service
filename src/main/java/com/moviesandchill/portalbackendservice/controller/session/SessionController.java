@@ -8,6 +8,7 @@ import com.moviesandchill.portalbackendservice.dto.stream.watcher.WatcherDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.stream.SessionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class SessionController {
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     public void deleteAllSession() {
         sessionService.deleteAllSession();
     }
@@ -43,21 +45,25 @@ public class SessionController {
     }
 
     @PostMapping()
+    @Secured("ROLE_USER")
     public ResponseEntity<SessionDto> addSession(@RequestBody NewSessionDto newSessionDto) {
         return commonMapper.toResponseEntity(sessionService.addSession(newSessionDto));
     }
 
     @DeleteMapping("/{sessionID}")
+    @Secured("ROLE_USER")
     public void deleteSessionById(@PathVariable Long sessionID) {
         sessionService.deleteSessionById(sessionID);
     }
 
     @PostMapping("/{sessionID}/setTimeAndState")
+    @Secured("ROLE_USER")
     public void setSessionTimeAndState(@PathVariable Long sessionID, @RequestBody JsonNode jsonNode) throws Exception {
         sessionService.setSessionTimeAndState(sessionID, jsonNode);
     }
 
     @PostMapping("/param")
+    @Secured("ROLE_USER")
     public ResponseEntity<SessionDto> addSessionByParameters(@RequestBody SessionParDto sessionParDto) {
         return commonMapper.toResponseEntity(sessionService.addSessionByParameters(sessionParDto));
     }
@@ -73,6 +79,7 @@ public class SessionController {
     }
 
     @PostMapping("/{sessionID}/invite")
+    @Secured("ROLE_USER")
     public void inviteFriendToSession(@PathVariable Long sessionID, @RequestBody Long friendID) {
         sessionService.inviteFriendToSession(sessionID, friendID);
     }

@@ -14,9 +14,8 @@ import java.util.Optional;
 @Service
 public class AgeLimitServiceImpl implements AgeLimitService {
 
-    private String filmServiceUrl;
-
     private final CommonMapper commonMapper;
+    private String filmServiceUrl;
 
     public AgeLimitServiceImpl(CommonMapper commonMapper) {
         this.commonMapper = commonMapper;

@@ -34,15 +34,11 @@ import java.util.Optional;
 @Slf4j
 public class FilmServiceImpl implements FilmService {
 
-    private String filmServiceUrl;
-
     private final CommonMapper commonMapper;
-
-    private UserService userService;
-
     private final FilmMapper filmMapper;
-
     private final ReviewMapper reviewMapper;
+    private String filmServiceUrl;
+    private UserService userService;
 
     @Autowired
     public FilmServiceImpl(CommonMapper commonMapper, FilmMapper filmMapper, ReviewMapper reviewMapper) {

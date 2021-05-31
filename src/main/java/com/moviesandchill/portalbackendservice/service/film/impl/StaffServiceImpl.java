@@ -14,9 +14,8 @@ import java.util.Optional;
 @Service
 public class StaffServiceImpl implements StaffService {
 
-    private String filmServiceUrl;
-
     private final CommonMapper commonMapper;
+    private String filmServiceUrl;
 
     public StaffServiceImpl(CommonMapper commonMapper) {
         this.commonMapper = commonMapper;

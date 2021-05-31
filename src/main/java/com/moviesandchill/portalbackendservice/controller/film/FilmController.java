@@ -57,7 +57,7 @@ public class FilmController {
     }
 
     @DeleteMapping
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void deleteAllFilm() {
         filmService.deleteAllFilm();
     }
@@ -68,18 +68,18 @@ public class FilmController {
     }
 
     @GetMapping("/full/{filmId}")
-    public ResponseEntity<FullFilmDto> getFullFilmById(@PathVariable Long filmId)  {
+    public ResponseEntity<FullFilmDto> getFullFilmById(@PathVariable Long filmId) {
         return commonMapper.toResponseEntity(filmService.getFullFilmById(filmId));
     }
 
     @PostMapping
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public ResponseEntity<FilmDto> addFilm(@RequestBody FilmDto filmDto) {
         return commonMapper.toResponseEntity(filmService.addFilm(filmDto));
     }
 
     @DeleteMapping("/{filmId}")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void deleteFilmById(@PathVariable Long filmId) {
         filmService.deleteFilmById(filmId);
     }
@@ -101,7 +101,7 @@ public class FilmController {
     }
 
     @PostMapping("/{filmId}/addStaff/{staffId}")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void addStaffToFilm(@PathVariable Long filmId, @PathVariable Long staffId) throws Exception {
         filmService.addStaffToFilm(filmId, staffId);
     }
@@ -112,7 +112,7 @@ public class FilmController {
     }
 
     @PostMapping("/{filmId}/addReview/{reviewId}")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void addReviewToFilm(@PathVariable Long filmId, @PathVariable Long reviewId) throws Exception {
         filmService.addReviewToFilm(filmId, reviewId);
     }
@@ -123,7 +123,7 @@ public class FilmController {
     }
 
     @PostMapping("/{filmId}/addScreenshot/{screenshotId}")
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_USER")
     public void addScreenshotToFilm(@PathVariable Long filmId, @PathVariable Long screenshotId) throws Exception {
         filmService.addScreenshotToFilm(filmId, screenshotId);
     }

@@ -5,6 +5,7 @@ import com.moviesandchill.portalbackendservice.dto.user.achievement.NewAchieveme
 import com.moviesandchill.portalbackendservice.dto.user.achievement.UpdateAchievementDto;
 import com.moviesandchill.portalbackendservice.service.user.AchievementService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,11 +30,13 @@ public class AchievementController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     private AchievementDto addAchievement(@RequestBody NewAchievementDto newAchievementDto) {
         return achievementService.addAchievement(newAchievementDto);
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     private void deleteAllAchievements() {
         achievementService.deleteAllAchievements();
     }
@@ -44,11 +47,13 @@ public class AchievementController {
     }
 
     @PutMapping("/{achievementId}")
+    @Secured("ROLE_USER")
     public void updateAchievement(@PathVariable long achievementId, @RequestBody UpdateAchievementDto updateAchievementDto) {
         achievementService.updateAchievement(achievementId, updateAchievementDto);
     }
 
     @DeleteMapping("/{achievementId}")
+    @Secured("ROLE_USER")
     private void deleteAchievement(@PathVariable long achievementId) {
         achievementService.deleteAchievement(achievementId);
     }

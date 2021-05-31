@@ -9,6 +9,7 @@ import com.moviesandchill.portalbackendservice.dto.user.user.UserDto;
 import com.moviesandchill.portalbackendservice.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +35,7 @@ public class UserController {
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     public void deleteAllUsers() {
         userService.deleteAllUsers();
     }
@@ -54,22 +56,26 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
+    @Secured("ROLE_USER")
     public void updateUser(@PathVariable long userId, @RequestBody UpdateUserDto updateUserDto) {
         userService.updateUser(userId, updateUserDto);
     }
 
     @DeleteMapping("/{userId}")
+    @Secured("ROLE_USER")
     public void deleteUser(@PathVariable long userId) {
         userService.deleteUser(userId);
     }
 
 
     @PutMapping("/{userId}/password")
+    @Secured("ROLE_USER")
     public void updateUserPassword(@PathVariable long userId, @RequestBody UpdatePasswordDto updatePasswordDto) {
         userService.updateUserPassword(userId, updatePasswordDto);
     }
 
     @PostMapping(path = "/{userId}/logo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Secured("ROLE_USER")
     public void updateUserLogo(@PathVariable long userId, @RequestPart("file") MultipartFile file) {
         userService.updateUserLogo(userId, file);
     }
@@ -85,11 +91,13 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/ban")
+    @Secured("ROLE_USER")
     public void ban(@PathVariable long userId) {
         userService.ban(userId);
     }
 
     @PostMapping("/{userId}/unban")
+    @Secured("ROLE_USER")
     public void unban(@PathVariable long userId) {
         userService.unban(userId);
     }

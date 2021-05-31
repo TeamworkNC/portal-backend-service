@@ -17,8 +17,8 @@ import java.util.List;
 public class UserWantWatchFilmService {
 
     private final String userServiceUrl;
-    private FilmService filmService;
     private final RestTemplate restTemplate;
+    private FilmService filmService;
 
     public UserWantWatchFilmService(@Value("${endpoints.user-service-url}") String userServiceUrl, RestTemplate restTemplate) {
         this.userServiceUrl = userServiceUrl;

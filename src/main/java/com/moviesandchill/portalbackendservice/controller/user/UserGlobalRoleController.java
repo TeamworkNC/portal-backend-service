@@ -3,6 +3,7 @@ package com.moviesandchill.portalbackendservice.controller.user;
 import com.moviesandchill.portalbackendservice.dto.user.globalrole.GlobalRoleDto;
 import com.moviesandchill.portalbackendservice.service.user.UserGlobalRoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,16 +28,19 @@ public class UserGlobalRoleController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     public void addGlobalRole(@PathVariable long userId, @RequestBody long globalRoleId) {
         userGlobalRoleService.addGlobalRole(userId, globalRoleId);
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     public void deleteAllGlobalRoles(@PathVariable long userId) {
         userGlobalRoleService.deleteAllGlobalRoles(userId);
     }
 
     @DeleteMapping("/{globalRoleId}")
+    @Secured("ROLE_USER")
     public void deleteGlobalRole(@PathVariable long userId, @PathVariable long globalRoleId) {
         userGlobalRoleService.deleteGlobalRole(userId, globalRoleId);
     }

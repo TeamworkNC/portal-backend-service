@@ -5,6 +5,7 @@ import com.moviesandchill.portalbackendservice.dto.user.globalrole.NewGlobalRole
 import com.moviesandchill.portalbackendservice.dto.user.globalrole.UpdateGlobalRoleDto;
 import com.moviesandchill.portalbackendservice.service.user.GlobalRoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,26 +31,29 @@ public class GlobalRoleController {
     }
 
     @PostMapping
+    @Secured("ROLE_USER")
     public GlobalRoleDto addGlobalRole(@RequestBody NewGlobalRoleDto newGlobalRoleDto) {
         return globalRoleService.addGlobalRole(newGlobalRoleDto);
     }
 
     @DeleteMapping
+    @Secured("ROLE_USER")
     public void deleteAllGlobalRoles() {
         globalRoleService.deleteAllGlobalRoles();
     }
 
-    @GetMapping("/{globalRoleId}")
     public GlobalRoleDto getGlobalRole(@PathVariable long globalRoleId) {
         return globalRoleService.getGlobalRole(globalRoleId);
     }
 
     @PutMapping("/{globalRoleId}")
+    @Secured("ROLE_USER")
     public void updateGlobalRole(@PathVariable long globalRoleId, @RequestBody UpdateGlobalRoleDto updateUserDto) {
         globalRoleService.updateGlobalRole(globalRoleId, updateUserDto);
     }
 
     @DeleteMapping("/{globalRoleId}")
+    @Secured("ROLE_USER")
     public void deleteGlobalRole(@PathVariable long globalRoleId) {
         globalRoleService.deleteGlobalRole(globalRoleId);
     }

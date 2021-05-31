@@ -12,10 +12,9 @@ import java.util.Objects;
 @Service
 public class RecommendationService {
 
+    private final RestTemplate restTemplate;
     @Value("${endpoints.recommendation-service-url}")
     private String baseUrl;
-
-    private final RestTemplate restTemplate;
 
     public RecommendationService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
