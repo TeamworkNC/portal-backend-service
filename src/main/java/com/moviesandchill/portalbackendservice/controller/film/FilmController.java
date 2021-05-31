@@ -1,5 +1,6 @@
 package com.moviesandchill.portalbackendservice.controller.film;
 
+import com.moviesandchill.portalbackendservice.dto.film.country.CountryDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FilmPageDto;
 import com.moviesandchill.portalbackendservice.dto.film.film.FullFilmDto;
@@ -10,11 +11,13 @@ import com.moviesandchill.portalbackendservice.dto.film.screenshot.ScreenshotDto
 import com.moviesandchill.portalbackendservice.dto.film.staff.StaffDto;
 import com.moviesandchill.portalbackendservice.mapper.CommonMapper;
 import com.moviesandchill.portalbackendservice.service.film.FilmService;
+import com.moviesandchill.portalbackendservice.utils.RestTemplateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController()
 @RequestMapping(
@@ -100,6 +103,12 @@ public class FilmController {
         return filmService.getAllStaffWithFilm(filmId);
     }
 
+    @PostMapping("/{filmId}/setAgeLimit{ageLimitID}")
+    public void setAgeLimitByFilmId(@PathVariable Long filmId,@PathVariable  Long ageLimitID) throws Exception {
+        filmService.setAgeLimitByFilmId(filmId,ageLimitID);
+    }
+
+
     @PostMapping("/{filmId}/addStaff/{staffId}")
     @Secured("ROLE_USER")
     public void addStaffToFilm(@PathVariable Long filmId, @PathVariable Long staffId) throws Exception {
@@ -126,5 +135,15 @@ public class FilmController {
     @Secured("ROLE_USER")
     public void addScreenshotToFilm(@PathVariable Long filmId, @PathVariable Long screenshotId) throws Exception {
         filmService.addScreenshotToFilm(filmId, screenshotId);
+    }
+
+    @PostMapping("/{filmId}/addListGenre")
+    public void addListGenreToFilm(@PathVariable Long filmId,@RequestBody  List<Long> genres) throws Exception {
+        filmService.addListGenreToFilm(filmId,genres);
+    }
+
+    @PostMapping("/{filmId}/addListStaff")
+    public void addListStaffToFilm(@PathVariable Long filmId,@RequestBody  List<Long> staffs) throws Exception {
+        filmService.addListStaffToFilm(filmId,staffs);
     }
 }
